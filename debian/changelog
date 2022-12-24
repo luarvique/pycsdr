@@ -1,3 +1,9 @@
+pycsdr (0.18.2) bullseye jammy; urgency=low
+
+  * Added noise filtering based on spectral subtraction
+
+ -- Marat Fayzullin <luarvique@gmail.com>  Sat, 24 Dec 2022 16:12:00 +0000
+
 pycsdr (0.18.1) bullseye jammy; urgency=low
 
   * fix shutdown of tcp sources for format other than complex float

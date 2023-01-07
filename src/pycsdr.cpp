@@ -34,6 +34,7 @@
 #include "dbpskdecoder.hpp"
 #include "varicodedecoder.hpp"
 #include "noisefilter.hpp"
+#include "cwdecoder.hpp"
 
 #include <csdr/version.hpp>
 
@@ -261,6 +262,12 @@ PyInit_modules(void) {
     PyObject* VaricodeDecoderType = PyType_FromSpecWithBases(&VaricodeDecoderSpec, bases);
     if (VaricodeDecoderType == NULL) return NULL;
 
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* CwDecoderType = PyType_FromSpecWithBases(&CwDecoderSpec, bases);
+    if (CwDecoderType == NULL) return NULL;
+
     PyObject *m = PyModule_Create(&pycsdrmodule);
     if (m == NULL) {
         return NULL;
@@ -335,6 +342,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "DBPskDecoder", DBPskDecoderType);
 
     PyModule_AddObject(m, "VaricodeDecoder", VaricodeDecoderType);
+
+    PyModule_AddObject(m, "CwDecoder", CwDecoderType);
 
     PyObject* csdrVersion = PyUnicode_FromStringAndSize(Csdr::version.c_str(), Csdr::version.length());
     if (csdrVersion == NULL) return NULL;

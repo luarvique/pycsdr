@@ -66,6 +66,7 @@ setup(
                 "src/dbpskdecoder.cpp",
                 "src/varicodedecoder.cpp",
                 "src/noisefilter.cpp",
+                "src/cwdecoder.cpp",
             ],
             language="c++",
             include_dirs=["src"],

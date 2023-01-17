@@ -8,10 +8,7 @@ static int CwDecoder_init(CwDecoder* self, PyObject* args, PyObject* kwds) {
 
     unsigned int sampleRate = 0;
     unsigned int targetFreq = 0;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", kwlist, &sampleRate)) {
-        return -1;
-    }
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", kwlist, &targetFreq)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "II", kwlist, &sampleRate, &targetFreq)) {
         return -1;
     }
 

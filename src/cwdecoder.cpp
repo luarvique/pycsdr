@@ -7,18 +7,18 @@ static int CwDecoder_init(CwDecoder* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
         (char *)"sampleRate",
         (char *)"targetFreq",
-        (char *)"buckets",
+        (char *)"targetWidth",
         NULL
     };
 
-    unsigned int sampleRate = 0;
-    unsigned int targetFreq = 800;
-    unsigned int buckets = 64;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|II", kwlist, &sampleRate, &targetFreq, &buckets)) {
+    unsigned int sampleRate  = 8000;
+    unsigned int targetFreq  = 800;
+    unsigned int targetWidth = 100;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|II", kwlist, &sampleRate, &targetFreq, &targetWidth)) {
         return -1;
     }
 
-    self->setModule(new Csdr::CwDecoder(sampleRate, targetFreq, buckets));
+    self->setModule(new Csdr::CwDecoder(sampleRate, targetFreq, targetWidth));
 
     self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;

@@ -67,6 +67,7 @@ setup(
                 "src/varicodedecoder.cpp",
                 "src/noisefilter.cpp",
                 "src/cwdecoder.cpp",
+                "src/rttydecoder.cpp",
             ],
             language="c++",
             include_dirs=["src"],

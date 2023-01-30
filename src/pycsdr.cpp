@@ -352,6 +352,8 @@ PyInit_modules(void) {
 
     PyModule_AddObject(m, "CwDecoder", CwDecoderType);
 
+    PyModule_AddObject(m, "RttyDecoder", RttyDecoderType);
+
     PyObject* csdrVersion = PyUnicode_FromStringAndSize(Csdr::version.c_str(), Csdr::version.length());
     if (csdrVersion == NULL) return NULL;
     PyModule_AddObject(m, "csdr_version", csdrVersion);

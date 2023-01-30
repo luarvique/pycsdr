@@ -250,3 +250,7 @@ class VaricodeDecoder(Module):
 class CwDecoder(Module):
     def __init__(self):
         ...
+
+class RttyDecoder(Module):
+    def __init__(self):
+        ...

@@ -35,6 +35,7 @@
 #include "varicodedecoder.hpp"
 #include "noisefilter.hpp"
 #include "cwdecoder.hpp"
+#include "rttydecoder.hpp"
 
 #include <csdr/version.hpp>
 
@@ -267,6 +268,12 @@ PyInit_modules(void) {
     if (bases == NULL) return NULL;
     PyObject* CwDecoderType = PyType_FromSpecWithBases(&CwDecoderSpec, bases);
     if (CwDecoderType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* RttyDecoderType = PyType_FromSpecWithBases(&RttyDecoderSpec, bases);
+    if (RttyDecoderType == NULL) return NULL;
 
     PyObject *m = PyModule_Create(&pycsdrmodule);
     if (m == NULL) {

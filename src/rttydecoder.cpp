@@ -9,18 +9,20 @@ static int RttyDecoder_init(RttyDecoder* self, PyObject* args, PyObject* kwds) {
         (char *)"targetFreq",
         (char *)"targetWidth",
         (char *)"baudRate",
+        (char *)"reverse",
         NULL
     };
 
     unsigned int sampleRate  = 8000;
-    unsigned int targetFreq  = 2125;
+    unsigned int targetFreq  = 450;
     unsigned int targetWidth = 170;
     double baudRate = 45.45;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|IId", kwlist, &sampleRate, &targetFreq, &targetWidth, &baudRate)) {
+    bool reverse = false;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|IIdp", kwlist, &sampleRate, &targetFreq, &targetWidth, &baudRate, &reverse)) {
         return -1;
     }
 
-    self->setModule(new Csdr::RttyDecoder(sampleRate, targetFreq, targetWidth, baudRate));
+    self->setModule(new Csdr::RttyDecoder(sampleRate, targetFreq, targetWidth, baudRate, reverse));
 
     self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;

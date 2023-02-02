@@ -13,12 +13,12 @@ static int RttyDecoder_init(RttyDecoder* self, PyObject* args, PyObject* kwds) {
         NULL
     };
 
-    unsigned int sampleRate  = 8000;
-    unsigned int targetFreq  = 450;
-    unsigned int targetWidth = 170;
+    unsigned int sampleRate = 8000;
+    int targetFreq  = 450;
+    int targetWidth = 170;
     double baudRate = 45.45;
     int reverse = false;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|IIdp", kwlist, &sampleRate, &targetFreq, &targetWidth, &baudRate, &reverse)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|iidp", kwlist, &sampleRate, &targetFreq, &targetWidth, &baudRate, &reverse)) {
         return -1;
     }
 

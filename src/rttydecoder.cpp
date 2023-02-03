@@ -2,6 +2,7 @@
 #include "types.hpp"
 
 #include <csdr/rtty.hpp>
+#include <csdr/complex.hpp>
 
 static int RttyDecoder_init(RttyDecoder* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
@@ -22,9 +23,9 @@ static int RttyDecoder_init(RttyDecoder* self, PyObject* args, PyObject* kwds) {
         return -1;
     }
 
-    self->setModule(new Csdr::RttyDecoder(sampleRate, targetFreq, targetWidth, baudRate, reverse));
+    self->setModule(new Csdr::RttyDecoder<Csdr::complex<float>>(sampleRate, targetFreq, targetWidth, baudRate, reverse));
 
-    self->inputFormat = FORMAT_FLOAT;
+    self->inputFormat = FORMAT_COMPLEX_FLOAT;
     self->outputFormat = FORMAT_CHAR;
 
     return 0;

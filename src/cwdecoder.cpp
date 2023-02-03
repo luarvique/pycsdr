@@ -2,6 +2,7 @@
 #include "types.hpp"
 
 #include <csdr/cw.hpp>
+#include <csdr/complex.hpp>
 
 static int CwDecoder_init(CwDecoder* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
@@ -18,9 +19,9 @@ static int CwDecoder_init(CwDecoder* self, PyObject* args, PyObject* kwds) {
         return -1;
     }
 
-    self->setModule(new Csdr::CwDecoder(sampleRate, targetFreq, targetWidth));
+    self->setModule(new Csdr::CwDecoder<Csdr::complex<float>>(sampleRate, targetFreq, targetWidth));
 
-    self->inputFormat = FORMAT_FLOAT;
+    self->inputFormat = FORMAT_COMPLEX_FLOAT;
     self->outputFormat = FORMAT_CHAR;
 
     return 0;

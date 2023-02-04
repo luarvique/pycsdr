@@ -1,8 +1,17 @@
+pycsdr (0.18.4) bullseye jammy; urgency=low
+
+  * Added RTTY decoder.
+  * Improved CW decoder.
+  * Fixed possible crash in CW chain.
+  * Switched both decoders to complex input.
+
+ -- Marat Fayzullin <luarvique@gmail.com>  Sat, 4 Feb 2023 16:12:00 +0000
+
 pycsdr (0.18.3) bullseye jammy; urgency=low
 
   * Added experimental CW decoder.
 
- -- Marat Fayzullin <luarvique@gmail.com>  Sat, 28 Jan 2028 16:12:00 +0000
+ -- Marat Fayzullin <luarvique@gmail.com>  Sat, 28 Jan 2023 16:12:00 +0000
 
 pycsdr (0.18.2) bullseye jammy; urgency=low
 

@@ -36,6 +36,7 @@
 #include "noisefilter.hpp"
 #include "cwdecoder.hpp"
 #include "rttydecoder.hpp"
+#include "sstvdecoder.hpp"
 
 #include <csdr/version.hpp>
 
@@ -275,6 +276,12 @@ PyInit_modules(void) {
     PyObject* RttyDecoderType = PyType_FromSpecWithBases(&RttyDecoderSpec, bases);
     if (RttyDecoderType == NULL) return NULL;
 
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* SstvDecoderType = PyType_FromSpecWithBases(&SstvDecoderSpec, bases);
+    if (SstvDecoderType == NULL) return NULL;
+
     PyObject *m = PyModule_Create(&pycsdrmodule);
     if (m == NULL) {
         return NULL;
@@ -353,6 +360,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "CwDecoder", CwDecoderType);
 
     PyModule_AddObject(m, "RttyDecoder", RttyDecoderType);
+
+    PyModule_AddObject(m, "SstvDecoder", SstvDecoderType);
 
     PyObject* csdrVersion = PyUnicode_FromStringAndSize(Csdr::version.c_str(), Csdr::version.length());
     if (csdrVersion == NULL) return NULL;

@@ -254,3 +254,7 @@ class CwDecoder(Module):
 class RttyDecoder(Module):
     def __init__(self):
         ...
+
+class SstvDecoder(Module):
+    def __init__(self):
+        ...

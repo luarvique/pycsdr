@@ -5,6 +5,6 @@
 
 #include "module.hpp"
 
-struct SstvDecoder: Module {};
+struct CwDecoder: Module {};
 
-extern PyType_Spec SstvDecoderSpec;
+extern PyType_Spec CwDecoderSpec;

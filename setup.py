@@ -68,6 +68,7 @@ setup(
                 "src/noisefilter.cpp",
                 "src/cwdecoder.cpp",
                 "src/rttydecoder.cpp",
+                "src/sstvdecoder.cpp",
             ],
             language="c++",
             include_dirs=["src"],

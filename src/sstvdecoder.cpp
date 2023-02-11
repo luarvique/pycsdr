@@ -7,17 +7,15 @@
 static int SstvDecoder_init(SstvDecoder* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
         (char *)"sampleRate",
-        (char *)"targetFreq",
         NULL
     };
 
-    unsigned int sampleRate  = 8000;
-    unsigned int targetFreq  = 3000;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|I", kwlist, &sampleRate, &targetFreq)) {
+    unsigned int sampleRate  = 44100;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", kwlist, &sampleRate)) {
         return -1;
     }
 
-    self->setModule(new Csdr::SstvDecoder<Csdr::complex<float>>(sampleRate, targetFreq));
+    self->setModule(new Csdr::SstvDecoder<Csdr::complex<float>>(sampleRate));
 
     self->inputFormat = FORMAT_COMPLEX_FLOAT;
     self->outputFormat = FORMAT_CHAR;

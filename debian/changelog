@@ -1,3 +1,9 @@
+pycsdr (0.18.6) bullseye jammy; urgency=low
+
+  * Synchronizing with csdr 0.18.6.
+
+ -- Marat Fayzullin <luarvique@gmail.com>  Sat, 4 Mar 2023 16:12:00 +0000
+
 pycsdr (0.18.5) bullseye jammy; urgency=low
 
   * Added SSTV decoder.

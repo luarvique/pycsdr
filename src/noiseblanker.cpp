@@ -16,14 +16,14 @@ static int NoiseBlanker_init(NoiseBlanker* self, PyObject* args, PyObject* kwds)
         return -1;
     }
 
-    Csdr::Filter<float>* filter =
+    Csdr::Filter<Csdr::complex<float>>* filter =
         new Csdr::RFNoiseBlanker(self->threshold1, self->threshold2);
 
-    self->setModule(new Csdr::FilterModule<float>(filter));
+    self->setModule(new Csdr::FilterModule<Csdr::complex<float>>(filter));
 
-    Py_INCREF(FORMAT_COMPLEX);
-    self->inputFormat = FORMAT_COMPLEX;
-    self->outputFormat = FORMAT_COMPLEX;
+    Py_INCREF(FORMAT_COMPLEX_FLOAT);
+    self->inputFormat = FORMAT_COMPLEX_FLOAT;
+    self->outputFormat = FORMAT_COMPLEX_FLOAT;
 
     return 0;
 }
@@ -35,10 +35,10 @@ static PyObject* NoiseBlanker_setThreshold1(NoiseBlanker* self, PyObject* args, 
         return NULL;
     }
 
-    Csdr::Filter<float>* filter =
+    Csdr::Filter<Csdr::complex<float>>* filter =
         new Csdr::RFNoiseBlanker(self->threshold1, self->threshold2);
 
-    dynamic_cast<Csdr::FilterModule<float>*>(self->module)->setFilter(filter);
+    dynamic_cast<Csdr::FilterModule<Csdr::complex<float>>*>(self->module)->setFilter(filter);
 
     Py_RETURN_NONE;
 }
@@ -50,10 +50,10 @@ static PyObject* NoiseBlanker_setThreshold2(NoiseBlanker* self, PyObject* args, 
         return NULL;
     }
 
-    Csdr::Filter<float>* filter =
+    Csdr::Filter<Csdr::complex<float>>* filter =
         new Csdr::RFNoiseBlanker(self->threshold1, self->threshold2);
 
-    dynamic_cast<Csdr::FilterModule<float>*>(self->module)->setFilter(filter);
+    dynamic_cast<Csdr::FilterModule<Csdr::complex<float>>*>(self->module)->setFilter(filter);
 
     Py_RETURN_NONE;
 }

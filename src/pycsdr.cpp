@@ -34,6 +34,7 @@
 #include "dbpskdecoder.hpp"
 #include "varicodedecoder.hpp"
 #include "noisefilter.hpp"
+#include "noiseblanker.hpp"
 #include "cwdecoder.hpp"
 #include "rttydecoder.hpp"
 #include "sstvdecoder.hpp"
@@ -219,6 +220,12 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
+    PyObject* NoiseBlankerType = PyType_FromSpecWithBases(&NoiseBlankerSpec, bases);
+    if (NoiseBlankerType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
     PyObject* RealPartType = PyType_FromSpecWithBases(&RealPartSpec, bases);
     if (RealPartType == NULL) return NULL;
 
@@ -340,6 +347,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "DcBlock", DcBlockType);
 
     PyModule_AddObject(m, "NoiseFilter", NoiseFilterType);
+
+    PyModule_AddObject(m, "NoiseBlanker", NoiseBlankerType);
 
     PyModule_AddObject(m, "RealPart", RealPartType);
 

@@ -66,6 +66,7 @@ setup(
                 "src/dbpskdecoder.cpp",
                 "src/varicodedecoder.cpp",
                 "src/noisefilter.cpp",
+                "src/noiseblanker.cpp",
                 "src/cwdecoder.cpp",
                 "src/rttydecoder.cpp",
                 "src/sstvdecoder.cpp",

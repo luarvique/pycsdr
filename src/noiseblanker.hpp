@@ -7,8 +7,8 @@
 #include "module.hpp"
 
 struct NoiseBlanker: Module {
-    double threshold1 = 10.0;
-    double threshold2 = 8.0;
+    int threshold1 = 10;
+    int threshold2 = 8;
 };
 
 extern PyType_Spec NoiseBlankerSpec;

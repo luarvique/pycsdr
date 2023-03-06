@@ -9,10 +9,10 @@ static int NoiseBlanker_init(NoiseBlanker* self, PyObject* args, PyObject* kwds)
         (char*)"threshold1", (char*)"threshold2", NULL
     };
 
-    self->threshold1 = 10.0;
-    self->threshold2 = 8.0;
+    self->threshold1 = 10;
+    self->threshold2 = 8;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|dd", kwlist, &self->threshold1, &self->threshold2)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|ii", kwlist, &self->threshold1, &self->threshold2)) {
         return -1;
     }
 
@@ -31,7 +31,7 @@ static int NoiseBlanker_init(NoiseBlanker* self, PyObject* args, PyObject* kwds)
 static PyObject* NoiseBlanker_setThreshold1(NoiseBlanker* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = { (char*)"threshold", NULL };
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "d", kwlist, &self->threshold1)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "i", kwlist, &self->threshold1)) {
         return NULL;
     }
 
@@ -46,7 +46,7 @@ static PyObject* NoiseBlanker_setThreshold1(NoiseBlanker* self, PyObject* args, 
 static PyObject* NoiseBlanker_setThreshold2(NoiseBlanker* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = { (char*)"threshold", NULL };
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "d", kwlist, &self->threshold2)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "i", kwlist, &self->threshold2)) {
         return NULL;
     }
 

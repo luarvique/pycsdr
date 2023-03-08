@@ -11,7 +11,7 @@ static int SstvDecoder_init(SstvDecoder* self, PyObject* args, PyObject* kwds) {
         NULL
     };
 
-    unsigned int sampleRate = 24000;
+    unsigned int sampleRate = 44100;
     unsigned int dbgTime    = 0;
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|I", kwlist, &sampleRate, &dbgTime)) {
         return -1;

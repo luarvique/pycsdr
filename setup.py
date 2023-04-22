@@ -69,6 +69,7 @@ setup(
                 "src/cwdecoder.cpp",
                 "src/rttydecoder.cpp",
                 "src/sstvdecoder.cpp",
+                "src/faxdecoder.cpp",
             ],
             language="c++",
             include_dirs=["src"],

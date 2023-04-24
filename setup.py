@@ -55,6 +55,7 @@ setup(
                 "src/nfmdeemphasis.cpp",
                 "src/wfmdeemphasis.cpp",
                 "src/agc.cpp",
+                "src/afc.cpp",
                 "src/amdemod.cpp",
                 "src/dcblock.cpp",
                 "src/realpart.cpp",

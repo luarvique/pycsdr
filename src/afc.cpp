@@ -18,7 +18,7 @@ static int Afc_init(Convert* self, PyObject* args, PyObject* kwds) {
         return -1;
     }
 
-    self->setModule(new Csdr::Afc<Csdr::complex<float>>(sampleRate, bandwidth, syncWidth));
+    self->setModule(new Csdr::Afc(sampleRate, bandwidth, syncWidth));
 
     self->inputFormat = FORMAT_COMPLEX_FLOAT;
     self->outputFormat = FORMAT_COMPLEX_FLOAT;

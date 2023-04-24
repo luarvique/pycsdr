@@ -3,7 +3,7 @@
 
 #include <csdr/afc.hpp>
 
-static int Afc_init(Convert* self, PyObject* args, PyObject* kwds) {
+static int Afc_init(Afc* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
         (char *)"sampleRate",
         (char *)"bandwidth",
@@ -14,7 +14,7 @@ static int Afc_init(Convert* self, PyObject* args, PyObject* kwds) {
     unsigned int sampleRate = 22050;
     unsigned int bandwidth  = 8000;
     unsigned int syncWidth  = 200;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|III", kwlist, &sampleRate, &bandiwdth, &syncWidth)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|III", kwlist, &sampleRate, &bandwidth, &syncWidth)) {
         return -1;
     }
 

@@ -6,15 +6,17 @@
 static int Afc_init(Afc* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
         (char *)"updatePeriod",
+        (char *)"samplePeriod",
         NULL
     };
 
     unsigned int updatePeriod = 4;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|I", kwlist, &updatePeriod)) {
+    unsigned int samplePeriod = 1;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|II", kwlist, &updatePeriod, &samplePeriod)) {
         return -1;
     }
 
-    self->setModule(new Csdr::Afc(updatePeriod));
+    self->setModule(new Csdr::Afc(updatePeriod, samplePeriod));
 
     self->inputFormat = FORMAT_COMPLEX_FLOAT;
     self->outputFormat = FORMAT_COMPLEX_FLOAT;

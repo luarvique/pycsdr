@@ -5,20 +5,16 @@
 
 static int Afc_init(Afc* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
-        (char *)"sampleRate",
-        (char *)"bandwidth",
-        (char *)"syncWidth",
+        (char *)"updatePeriod",
         NULL
     };
 
-    unsigned int sampleRate = 22050;
-    unsigned int bandwidth  = 8000;
-    unsigned int syncWidth  = 200;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|III", kwlist, &sampleRate, &bandwidth, &syncWidth)) {
+    unsigned int updatePeriod = 4;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|I", kwlist, &updatePeriod)) {
         return -1;
     }
 
-    self->setModule(new Csdr::Afc(sampleRate, bandwidth, syncWidth));
+    self->setModule(new Csdr::Afc(updatePeriod));
 
     self->inputFormat = FORMAT_COMPLEX_FLOAT;
     self->outputFormat = FORMAT_COMPLEX_FLOAT;

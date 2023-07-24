@@ -5,8 +5,9 @@ class Format(Enum):
     CHAR = 1
     SHORT = 2
     FLOAT = 3
-    COMPLEX_FLOAT = 4
-    COMPLEX_SHORT = 5
+    COMPLEX_CHAR = 4
+    COMPLEX_FLOAT = 5
+    COMPLEX_SHORT = 6
 
 
 class AgcProfile(Enum):

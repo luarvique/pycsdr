@@ -12,6 +12,7 @@ PyObject* getFormat(const char* name);
 #define FORMAT_CHAR getFormat("CHAR")
 #define FORMAT_SHORT getFormat("SHORT")
 #define FORMAT_FLOAT getFormat("FLOAT")
+#define FORMAT_COMPLEX_CHAR getFormat("COMPLEX_CHAR")
 #define FORMAT_COMPLEX_FLOAT getFormat("COMPLEX_FLOAT")
 #define FORMAT_COMPLEX_SHORT getFormat("COMPLEX_SHORT")
 

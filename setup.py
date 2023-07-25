@@ -59,6 +59,7 @@ setup(
                 "src/amdemod.cpp",
                 "src/dcblock.cpp",
                 "src/realpart.cpp",
+                "src/resampler.cpp",
                 "src/audioresampler.cpp",
                 "src/adpcmencoder.cpp",
                 "src/downmix.cpp",

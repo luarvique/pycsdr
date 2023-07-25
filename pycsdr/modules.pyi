@@ -212,6 +212,11 @@ class RealPart(Module):
         ...
 
 
+class Resampler(Module):
+    def __init__(self, inputRate: int, outputRate: int):
+        ...
+
+
 class AudioResampler(Module):
     def __init__(self, inputRate: int, outputRate: int):
         ...

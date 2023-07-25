@@ -39,6 +39,7 @@
 #include "sstvdecoder.hpp"
 #include "faxdecoder.hpp"
 #include "afc.hpp"
+#include "resampler.hpp"
 
 #include <csdr/version.hpp>
 
@@ -296,6 +297,12 @@ PyInit_modules(void) {
     PyObject* AfcType = PyType_FromSpecWithBases(&AfcSpec, bases);
     if (AfcType == NULL) return NULL;
 
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* ResamplerType = PyType_FromSpecWithBases(&ResamplerSpec, bases);
+    if (ResamplerType == NULL) return NULL;
+
     PyObject *m = PyModule_Create(&pycsdrmodule);
     if (m == NULL) {
         return NULL;
@@ -380,6 +387,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "FaxDecoder", FaxDecoderType);
 
     PyModule_AddObject(m, "Afc", AfcType);
+
+    PyModule_AddObject(m, "Resampler", ResamplerType);
 
     PyObject* csdrVersion = PyUnicode_FromStringAndSize(Csdr::version.c_str(), Csdr::version.length());
     if (csdrVersion == NULL) return NULL;

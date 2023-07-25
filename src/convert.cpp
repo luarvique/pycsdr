@@ -35,6 +35,8 @@ static int Convert_init(Convert* self, PyObject* args, PyObject* kwds) {
     } else if (self->inputFormat == FORMAT_COMPLEX_FLOAT) {
         if (self->outputFormat == FORMAT_COMPLEX_SHORT) {
             self->setModule(new Csdr::Converter<Csdr::complex<float>, Csdr::complex<short>>());
+        } else if (self->outputFormat == FORMAT_COMPLEX_CHAR) {
+            self->setModule(new Csdr::Converter<Csdr::complex<float>, Csdr::complex<unsigned char>>());
         } else {
             PyErr_SetString(PyExc_ValueError, "unsupported conversion");
             return -1;
@@ -42,13 +44,6 @@ static int Convert_init(Convert* self, PyObject* args, PyObject* kwds) {
     } else if (self->inputFormat == FORMAT_COMPLEX_SHORT) {
         if (self->outputFormat == FORMAT_COMPLEX_FLOAT) {
             self->setModule(new Csdr::Converter<Csdr::complex<short>, Csdr::complex<float>>());
-        } else {
-            PyErr_SetString(PyExc_ValueError, "unsupported conversion");
-            return -1;
-        }
-    } else if (self->inputFormat == FORMAT_COMPLEX_FLOAT) {
-        if (self->outputFormat == FORMAT_COMPLEX_CHAR) {
-            self->setModule(new Csdr::Converter<Csdr::complex<float>, Csdr::complex<unsigned char>>());
         } else {
             PyErr_SetString(PyExc_ValueError, "unsupported conversion");
             return -1;

@@ -41,6 +41,14 @@ class BufferReader(Reader):
         ...
 
 
+class CallbackWriter(Writer):
+    def __init__(self, format: Format):
+        ...
+
+    def write(self, data: memoryview) -> None:
+        ...
+
+
 class Source:
     def setWriter(self, writer: Writer) -> None:
         ...
@@ -193,20 +201,6 @@ class DcBlock(Module):
         ...
 
 
-class NoiseFilter(Module):
-    def __init__(self, threshold: int, fftSize: int, wndSize: int):
-        ...
-
-    def setThreshold(self, threshold: int) -> None:
-        ...
-
-    def setWndSize(self, wndSize: int) -> None:
-        ...
-
-    def setFftSize(self, fftSize: int) -> None:
-        ...
-
-
 class RealPart(Module):
     def __init__(self):
         ...
@@ -233,7 +227,7 @@ class Gain(Module):
 
 
 class TimingRecovery(Module):
-    def __init__(self, decimation: int, loopGain: float, maxError: float, useQ: bool):
+    def __init__(self, format: Format, decimation: int, loopGain: float, maxError: float):
         ...
 
 
@@ -246,6 +240,30 @@ class VaricodeDecoder(Module):
     def __init__(self):
         ...
 
+class PhaseDemod(Module):
+    def __init__(self):
+        ...
+
+class BaudotDecoder(Module):
+    def __init__(self):
+        ...
+
+
+class Lowpass(Module):
+    def __init__(self, format: Format, cutoff: float, transition: float = 0.05):
+        ...
+
+class ExecModule(Module):
+    def __init__(self, inFormat: Format, outFormat: Format, args: list[str]):
+        ...
+
+    # sends a SIGHUP to the child process. check if this feature is available on the program in use.
+    def reload(self) -> None:
+        ...
+
+    # if SIGHUP is not available, you can perform a hard restart.
+    def restart(self) -> None:
+        ...
 
 class CwDecoder(Module):
     def __init__(self):
@@ -257,4 +275,17 @@ class RttyDecoder(Module):
 
 class SstvDecoder(Module):
     def __init__(self):
+        ...
+
+class NoiseFilter(Module):
+    def __init__(self, threshold: int, fftSize: int, wndSize: int):
+        ...
+
+    def setThreshold(self, threshold: int) -> None:
+        ...
+
+    def setWndSize(self, wndSize: int) -> None:
+        ...
+
+    def setFftSize(self, fftSize: int) -> None:
         ...

@@ -5,6 +5,6 @@
 
 #include "module.hpp"
 
-struct Convert: Module {};
+struct BaudotDecoder: Module {};
 
-extern PyType_Spec ConvertSpec;
+extern PyType_Spec BaudotDecoderSpec;

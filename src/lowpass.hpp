@@ -5,6 +5,6 @@
 
 #include "module.hpp"
 
-struct Convert: Module {};
+struct Lowpass: Module {};
 
-extern PyType_Spec ConvertSpec;
+extern PyType_Spec LowpassSpec;

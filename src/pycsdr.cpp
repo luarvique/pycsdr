@@ -33,6 +33,11 @@
 #include "timingrecovery.hpp"
 #include "dbpskdecoder.hpp"
 #include "varicodedecoder.hpp"
+#include "phasedemod.hpp"
+#include "baudot.hpp"
+#include "lowpass.hpp"
+#include "exec.hpp"
+#include "callbackwriter.hpp"
 #include "noisefilter.hpp"
 #include "cwdecoder.hpp"
 #include "rttydecoder.hpp"
@@ -91,6 +96,12 @@ PyInit_modules(void) {
     if (bases == NULL) return NULL;
     BufferType = (PyTypeObject*) PyType_FromSpecWithBases(&BufferSpec, bases);
     if (BufferType == NULL) return NULL;
+
+    Py_INCREF(WriterType);
+    bases = PyTuple_Pack(1, WriterType);
+    if (bases == NULL) return NULL;
+    PyObject* CallbackWriterType = PyType_FromSpecWithBases(&CallbackWriterSpec, bases);
+    if (CallbackWriterType == NULL) return NULL;
 
     Py_INCREF(ReaderType);
     bases = PyTuple_Pack(1, ReaderType);
@@ -215,12 +226,6 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
-    PyObject* NoiseFilterType = PyType_FromSpecWithBases(&NoiseFilterSpec, bases);
-    if (NoiseFilterType == NULL) return NULL;
-
-    Py_INCREF(ModuleType);
-    bases = PyTuple_Pack(1, ModuleType);
-    if (bases == NULL) return NULL;
     PyObject* RealPartType = PyType_FromSpecWithBases(&RealPartSpec, bases);
     if (RealPartType == NULL) return NULL;
 
@@ -269,6 +274,30 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
+    PyObject* PhaseDemodType = PyType_FromSpecWithBases(&PhaseDemodSpec, bases);
+    if (PhaseDemodType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* BaudotDecoderType = PyType_FromSpecWithBases(&BaudotDecoderSpec, bases);
+    if (BaudotDecoderType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* LowpassType = PyType_FromSpecWithBases(&LowpassSpec, bases);
+    if (LowpassType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* ExecModuleType = PyType_FromSpecWithBases(&ExecModuleSpec, bases);
+    if (ExecModuleType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
     PyObject* CwDecoderType = PyType_FromSpecWithBases(&CwDecoderSpec, bases);
     if (CwDecoderType == NULL) return NULL;
 
@@ -293,6 +322,12 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
+    PyObject* NoiseFilterType = PyType_FromSpecWithBases(&NoiseFilterSpec, bases);
+    if (NoiseFilterType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
     PyObject* AfcType = PyType_FromSpecWithBases(&AfcSpec, bases);
     if (AfcType == NULL) return NULL;
 
@@ -304,6 +339,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "Reader", (PyObject*) ReaderType);
 
     PyModule_AddObject(m, "Writer", (PyObject*) WriterType);
+
+    PyModule_AddObject(m, "CallbackWriter", (PyObject*) CallbackWriterType);
 
     PyModule_AddObject(m, "Sink", (PyObject*) SinkType);
 
@@ -353,8 +390,6 @@ PyInit_modules(void) {
 
     PyModule_AddObject(m, "DcBlock", DcBlockType);
 
-    PyModule_AddObject(m, "NoiseFilter", NoiseFilterType);
-
     PyModule_AddObject(m, "RealPart", RealPartType);
 
     PyModule_AddObject(m, "AudioResampler", AudioResamplerType);
@@ -371,6 +406,14 @@ PyInit_modules(void) {
 
     PyModule_AddObject(m, "VaricodeDecoder", VaricodeDecoderType);
 
+    PyModule_AddObject(m, "PhaseDemod", PhaseDemodType);
+
+    PyModule_AddObject(m, "BaudotDecoder", BaudotDecoderType);
+
+    PyModule_AddObject(m, "Lowpass", LowpassType);
+
+    PyModule_AddObject(m, "ExecModule", ExecModuleType);
+
     PyModule_AddObject(m, "CwDecoder", CwDecoderType);
 
     PyModule_AddObject(m, "RttyDecoder", RttyDecoderType);
@@ -378,6 +421,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "SstvDecoder", SstvDecoderType);
 
     PyModule_AddObject(m, "FaxDecoder", FaxDecoderType);
+
+    PyModule_AddObject(m, "NoiseFilter", NoiseFilterType);
 
     PyModule_AddObject(m, "Afc", AfcType);
 

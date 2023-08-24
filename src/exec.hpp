@@ -5,6 +5,6 @@
 
 #include "module.hpp"
 
-struct Convert: Module {};
+struct ExecModule: Module {};
 
-extern PyType_Spec ConvertSpec;
+extern PyType_Spec ExecModuleSpec;

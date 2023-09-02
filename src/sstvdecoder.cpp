@@ -17,9 +17,9 @@ static int SstvDecoder_init(SstvDecoder* self, PyObject* args, PyObject* kwds) {
         return -1;
     }
 
-    self->setModule(new Csdr::SstvDecoder<Csdr::complex<float>>(sampleRate, dbgTime));
+    self->setModule(new Csdr::SstvDecoder<float>(sampleRate, dbgTime));
 
-    self->inputFormat = FORMAT_COMPLEX_FLOAT;
+    self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;
 
     return 0;

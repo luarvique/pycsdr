@@ -19,9 +19,9 @@ static int FaxDecoder_init(FaxDecoder* self, PyObject* args, PyObject* kwds) {
         return -1;
     }
 
-    self->setModule(new Csdr::FaxDecoder<Csdr::complex<float>>(sampleRate, lpm, 0, dbgTime));
+    self->setModule(new Csdr::FaxDecoder<float>(sampleRate, lpm, 0, dbgTime));
 
-    self->inputFormat = FORMAT_COMPLEX_FLOAT;
+    self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;
 
     return 0;

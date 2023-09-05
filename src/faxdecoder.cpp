@@ -14,12 +14,13 @@ static int FaxDecoder_init(FaxDecoder* self, PyObject* args, PyObject* kwds) {
 
     unsigned int sampleRate = 44100;
     unsigned int lpm        = 120;
+    unsigned int options    = Csdr::FaxDecoder::OPT_POST;
     unsigned int dbgTime    = 0;
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|II", kwlist, &sampleRate, &lpm, &dbgTime)) {
         return -1;
     }
 
-    self->setModule(new Csdr::FaxDecoder<float>(sampleRate, lpm, 0, dbgTime));
+    self->setModule(new Csdr::FaxDecoder<float>(sampleRate, lpm, options, dbgTime));
 
     self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;

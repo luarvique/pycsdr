@@ -21,7 +21,7 @@ static int FaxDecoder_init(FaxDecoder* self, PyObject* args, PyObject* kwds) {
     unsigned int colorMode   = 0;
     unsigned int amMode      = 0;
     unsigned int dbgTime     = 0;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|IIppp", kwlist, &sampleRate, &lpm, &postProcess, &dbgTime)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|IIppp", kwlist, &sampleRate, &lpm, &dbgTime, &postProcess, &colorMode, &amMode)) {
         return -1;
     }
 

@@ -9,16 +9,26 @@ static int FaxDecoder_init(FaxDecoder* self, PyObject* args, PyObject* kwds) {
         (char *)"sampleRate",
         (char *)"lpm",
         (char *)"dbgTime",
+        (char *)"postProcess",
+        (char *)"color",
+        (char *)"am",
         NULL
     };
 
-    unsigned int sampleRate = 44100;
-    unsigned int lpm        = 120;
-    unsigned int options    = Csdr::FaxDecoder<float>::OPT_POST;
-    unsigned int dbgTime    = 0;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|II", kwlist, &sampleRate, &lpm, &dbgTime)) {
+    unsigned int sampleRate  = 44100;
+    unsigned int lpm         = 120;
+    unsigned int postProcess = 0;
+    unsigned int colorMode   = 0;
+    unsigned int amMode      = 0;
+    unsigned int dbgTime     = 0;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|IIppp", kwlist, &sampleRate, &lpm, &postProcess, &dbgTime)) {
         return -1;
     }
+
+    unsigned int options =
+        (postProcess? Csdr::FaxDecoder<float>::OPT_POST  : 0) |
+        (colorMode?   Csdr::FaxDecoder<float>::OPT_COLOR : 0) |
+        (amMode?      Csdr::FaxDecoder<float>::OPT_AM    : 0);
 
     self->setModule(new Csdr::FaxDecoder<float>(sampleRate, lpm, options, dbgTime));
 

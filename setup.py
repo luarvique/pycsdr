@@ -66,6 +66,7 @@ setup(
                 "src/dbpskdecoder.cpp",
                 "src/varicodedecoder.cpp",
                 "src/phasedemod.cpp",
+                "src/jkrtty.cpp",
                 "src/baudot.cpp",
                 "src/lowpass.cpp",
                 "src/exec.cpp",

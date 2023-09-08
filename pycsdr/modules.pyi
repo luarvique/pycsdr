@@ -244,10 +244,13 @@ class PhaseDemod(Module):
     def __init__(self):
         ...
 
+class JKRttyDecoder(Module):
+    def __init__(self, invert: bool = False):
+        ...
+
 class BaudotDecoder(Module):
     def __init__(self):
         ...
-
 
 class Lowpass(Module):
     def __init__(self, format: Format, cutoff: float, transition: float = 0.05):

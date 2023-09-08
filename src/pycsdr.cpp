@@ -34,6 +34,7 @@
 #include "dbpskdecoder.hpp"
 #include "varicodedecoder.hpp"
 #include "phasedemod.hpp"
+#include "jkrtty.hpp"
 #include "baudot.hpp"
 #include "lowpass.hpp"
 #include "exec.hpp"
@@ -280,6 +281,12 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
+    PyObject* JKRttyDecoderType = PyType_FromSpecWithBases(&JKRttyDecoderSpec, bases);
+    if (JKRttyDecoderType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
     PyObject* BaudotDecoderType = PyType_FromSpecWithBases(&BaudotDecoderSpec, bases);
     if (BaudotDecoderType == NULL) return NULL;
 
@@ -407,6 +414,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "VaricodeDecoder", VaricodeDecoderType);
 
     PyModule_AddObject(m, "PhaseDemod", PhaseDemodType);
+
+    PyModule_AddObject(m, "JKRttyDecoder", JKRttyDecoderType);
 
     PyModule_AddObject(m, "BaudotDecoder", BaudotDecoderType);
 

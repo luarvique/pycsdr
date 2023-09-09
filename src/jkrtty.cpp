@@ -1,9 +1,9 @@
-#include "rtty.hpp"
+#include "jkrtty.hpp"
 #include "types.hpp"
 
-#include <csdr/rtty.hpp>
+#include <csdr/jkrtty.hpp>
 
-static int RttyDecoder_init(RttyDecoder* self, PyObject* args, PyObject* kwds) {
+static int JKRttyDecoder_init(JKRttyDecoder* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {(char*) "invert", NULL};
 
     int invert = false;
@@ -13,20 +13,20 @@ static int RttyDecoder_init(RttyDecoder* self, PyObject* args, PyObject* kwds) {
 
     self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;
-    self->setModule(new Csdr::RttyDecoder((bool) invert));
+    self->setModule(new Csdr::JKRttyDecoder((bool) invert));
 
     return 0;
 }
 
-static PyType_Slot RttyDecoderSlots[] = {
-    {Py_tp_init, (void*) RttyDecoder_init},
+static PyType_Slot JKRttyDecoderSlots[] = {
+    {Py_tp_init, (void*) JKRttyDecoder_init},
     {0, 0}
 };
 
-PyType_Spec RttyDecoderSpec = {
-    "pycsdr.modules.RttyDecoder",
-    sizeof(RttyDecoder),
+PyType_Spec JKRttyDecoderSpec = {
+    "pycsdr.modules.JKRttyDecoder",
+    sizeof(JKRttyDecoder),
     0,
     Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_FINALIZE,
-    RttyDecoderSlots
+    JKRttyDecoderSlots
 };

@@ -1,4 +1,4 @@
-#include "sstvdecoder.hpp"
+#include "sstv.hpp"
 #include "types.hpp"
 
 #include <csdr/sstv.hpp>

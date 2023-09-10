@@ -1,4 +1,4 @@
-#include "cwdecoder.hpp"
+#include "cw.hpp"
 #include "types.hpp"
 
 #include <csdr/cw.hpp>

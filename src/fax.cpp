@@ -1,4 +1,4 @@
-#include "faxdecoder.hpp"
+#include "fax.hpp"
 #include "types.hpp"
 
 #include <csdr/fax.hpp>

@@ -40,10 +40,10 @@
 #include "exec.hpp"
 #include "callbackwriter.hpp"
 #include "noisefilter.hpp"
-#include "cwdecoder.hpp"
-#include "rttydecoder.hpp"
-#include "sstvdecoder.hpp"
-#include "faxdecoder.hpp"
+#include "cw.hpp"
+#include "rtty.hpp"
+#include "sstv.hpp"
+#include "fax.hpp"
 #include "afc.hpp"
 
 #include <csdr/version.hpp>

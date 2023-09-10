@@ -1,4 +1,4 @@
-#include "rttydecoder.hpp"
+#include "rtty.hpp"
 #include "types.hpp"
 
 #include <csdr/rtty.hpp>

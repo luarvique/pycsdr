@@ -5,6 +5,6 @@
 
 #include "module.hpp"
 
-struct JKRttyDecoder: Module {};
+struct MFRttyDecoder: Module {};
 
-extern PyType_Spec JKRttyDecoderSpec;
+extern PyType_Spec MFRttyDecoderSpec;

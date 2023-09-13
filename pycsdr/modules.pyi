@@ -244,7 +244,7 @@ class PhaseDemod(Module):
     def __init__(self):
         ...
 
-class JKRttyDecoder(Module):
+class RttyDecoder(Module):
     def __init__(self, invert: bool = False):
         ...
 
@@ -272,7 +272,7 @@ class CwDecoder(Module):
     def __init__(self):
         ...
 
-class RttyDecoder(Module):
+class MFRttyDecoder(Module):
     def __init__(self):
         ...
 

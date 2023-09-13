@@ -2,31 +2,18 @@
 #include "types.hpp"
 
 #include <csdr/rtty.hpp>
-#include <csdr/complex.hpp>
 
 static int RttyDecoder_init(RttyDecoder* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {
-        (char *)"sampleRate",
-        (char *)"targetFreq",
-        (char *)"targetWidth",
-        (char *)"baudRate",
-        (char *)"reverse",
-        NULL
-    };
+    static char* kwlist[] = {(char*) "invert", NULL};
 
-    unsigned int sampleRate = 8000;
-    int targetFreq  = 450;
-    int targetWidth = 170;
-    double baudRate = 45.45;
-    int reverse = false;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|iidp", kwlist, &sampleRate, &targetFreq, &targetWidth, &baudRate, &reverse)) {
+    int invert = false;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|p", kwlist, &invert)) {
         return -1;
     }
 
-    self->setModule(new Csdr::RttyDecoder<Csdr::complex<float>>(sampleRate, targetFreq, targetWidth, baudRate, reverse));
-
-    self->inputFormat = FORMAT_COMPLEX_FLOAT;
+    self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;
+    self->setModule(new Csdr::RttyDecoder((bool) invert));
 
     return 0;
 }

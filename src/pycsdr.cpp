@@ -34,14 +34,14 @@
 #include "dbpskdecoder.hpp"
 #include "varicodedecoder.hpp"
 #include "phasedemod.hpp"
-#include "jkrtty.hpp"
+#include "rtty.hpp"
 #include "baudot.hpp"
 #include "lowpass.hpp"
 #include "exec.hpp"
 #include "callbackwriter.hpp"
 #include "noisefilter.hpp"
 #include "cw.hpp"
-#include "rtty.hpp"
+#include "mfrtty.hpp"
 #include "sstv.hpp"
 #include "fax.hpp"
 #include "afc.hpp"
@@ -281,8 +281,8 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
-    PyObject* JKRttyDecoderType = PyType_FromSpecWithBases(&JKRttyDecoderSpec, bases);
-    if (JKRttyDecoderType == NULL) return NULL;
+    PyObject* RttyDecoderType = PyType_FromSpecWithBases(&RttyDecoderSpec, bases);
+    if (RttyDecoderType == NULL) return NULL;
 
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
@@ -311,8 +311,8 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
-    PyObject* RttyDecoderType = PyType_FromSpecWithBases(&RttyDecoderSpec, bases);
-    if (RttyDecoderType == NULL) return NULL;
+    PyObject* MFRttyDecoderType = PyType_FromSpecWithBases(&MFRttyDecoderSpec, bases);
+    if (MFRttyDecoderType == NULL) return NULL;
 
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
@@ -415,7 +415,7 @@ PyInit_modules(void) {
 
     PyModule_AddObject(m, "PhaseDemod", PhaseDemodType);
 
-    PyModule_AddObject(m, "JKRttyDecoder", JKRttyDecoderType);
+    PyModule_AddObject(m, "RttyDecoder", RttyDecoderType);
 
     PyModule_AddObject(m, "BaudotDecoder", BaudotDecoderType);
 
@@ -425,7 +425,7 @@ PyInit_modules(void) {
 
     PyModule_AddObject(m, "CwDecoder", CwDecoderType);
 
-    PyModule_AddObject(m, "RttyDecoder", RttyDecoderType);
+    PyModule_AddObject(m, "MFRttyDecoder", MFRttyDecoderType);
 
     PyModule_AddObject(m, "SstvDecoder", SstvDecoderType);
 

@@ -70,7 +70,6 @@ setup(
                 "src/baudot.cpp",
                 "src/lowpass.cpp",
                 "src/exec.cpp",
-                "src/callbackwriter.cpp",
                 "src/noisefilter.cpp",
                 "src/cw.cpp",
                 "src/mfrtty.cpp",

@@ -5,6 +5,16 @@
 static int CallbackWriter_init(CallbackWriter* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {(char*) "format", NULL};
 
+    if (self->writer) {
+        delete self->writer;
+        self->writer = NULL;
+    }
+
+    if (self->writerFormat) {
+        Py_DECREF(self->writerFormat);
+        self->writerFormat = NULL;
+    }
+
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!", kwlist, FORMAT_TYPE, &self->writerFormat)) {
         return -1;
     }
@@ -22,6 +32,7 @@ static int CallbackWriter_init(CallbackWriter* self, PyObject* args, PyObject* k
     } else {
         Py_DECREF(self->writerFormat);
         PyErr_SetString(PyExc_ValueError, "unsupported writer format");
+        self->writerFormat = NULL;
         return -1;
     }
 
@@ -65,12 +76,12 @@ ProxyWriter<T>::ProxyWriter(CallbackWriter* writer):
 
 template <typename T>
 ProxyWriter<T>::~ProxyWriter() {
-    free(buffer);
+    if(buffer) { free(buffer);buffer=NULL; }
 }
 
 template <typename T>
 size_t ProxyWriter<T>::writeable() {
-    return bufferSize;
+    return buffer? bufferSize : 0;
 }
 
 template <typename T>
@@ -80,6 +91,12 @@ T* ProxyWriter<T>::getWritePointer() {
 
 template <typename T>
 void ProxyWriter<T>::advance(size_t how_much) {
+    // must have buffer
+    if (buffer == NULL) return;
+
+    // do not exceed buffer size
+    if (how_much > bufferSize) how_much = bufferSize;
+
     // acquire GIL
     PyGILState_STATE gstate;
     gstate = PyGILState_Ensure();
@@ -90,7 +107,7 @@ void ProxyWriter<T>::advance(size_t how_much) {
         PyObject* result = PyObject_CallMethod((PyObject*) writer, "write", "O", bytes);
         Py_DECREF(bytes);
         // not interested in the result
-        Py_DECREF(result);
+        if (result != NULL) Py_DECREF(result);
     }
 
     /* Release the thread. No Python API allowed beyond this point. */

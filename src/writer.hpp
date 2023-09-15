@@ -6,8 +6,8 @@
 
 struct Writer {
     PyObject_HEAD
-    Csdr::UntypedWriter* writer;
-    PyObject* writerFormat;
+    Csdr::UntypedWriter* writer = NULL;
+    PyObject* writerFormat = NULL;
 };
 
 extern PyType_Spec WriterSpec;

@@ -1,7 +1,14 @@
 #include "writer.hpp"
 
 static int Writer_finalize(Writer* self) {
-    delete self->writer;
+    if(self->writer) {
+        delete self->writer;
+        self->writer = NULL;
+    }
+    if(self->writerFormat) {
+        Py_DECREF(self->writerFormat);
+        self->writerFormat = NULL;
+    }
     return 0;
 }
 

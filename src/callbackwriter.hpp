@@ -21,6 +21,6 @@ class ProxyWriter: public Csdr::Writer<T> {
         T* getWritePointer() override;
     private:
         size_t bufferSize = 1024;
-        CallbackWriter* writer;
-        T* buffer;
+        CallbackWriter* writer = NULL;
+        T* buffer = NULL;
 };

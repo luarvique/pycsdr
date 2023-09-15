@@ -98,17 +98,13 @@ void ProxyWriter<T>::advance(size_t how_much) {
     if (how_much > bufferSize) how_much = bufferSize;
 
     // acquire GIL
-    PyGILState_STATE gstate;
-    gstate = PyGILState_Ensure();
+    PyGILState_STATE gstate = PyGILState_Ensure();
 
-    PyObject* bytes = PyMemoryView_FromMemory((char*) buffer, how_much * sizeof(T), PyBUF_READ);
-    // if bytes is NULL, that actually represents an error. unfortunately, we cannot report that anywhere...
-    if (bytes != NULL) {
-        PyObject* result = PyObject_CallMethod((PyObject*) writer, "write", "O", bytes);
-        Py_DECREF(bytes);
-        // not interested in the result
-        if (result != NULL) Py_DECREF(result);
-    }
+    PyObject* result = PyObject_CallMethod(
+        (PyObject*) writer, "write", "y#", buffer, how_much * sizeof(T));
+
+    // not interested in the result
+    Py_XDECREF(result);
 
     /* Release the thread. No Python API allowed beyond this point. */
     PyGILState_Release(gstate);

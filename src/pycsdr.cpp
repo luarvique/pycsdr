@@ -44,6 +44,8 @@
 #include "sstv.hpp"
 #include "fax.hpp"
 #include "afc.hpp"
+#include "sitor.hpp"
+#include "ccir476.hpp"
 
 #include <csdr/version.hpp>
 
@@ -331,6 +333,18 @@ PyInit_modules(void) {
     PyObject* AfcType = PyType_FromSpecWithBases(&AfcSpec, bases);
     if (AfcType == NULL) return NULL;
 
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* SitorDecoderType = PyType_FromSpecWithBases(&SitorDecoderSpec, bases);
+    if (SitorDecoderType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* Ccir476DecoderType = PyType_FromSpecWithBases(&Ccir476DecoderSpec, bases);
+    if (Ccir476DecoderType == NULL) return NULL;
+
     PyObject *m = PyModule_Create(&pycsdrmodule);
     if (m == NULL) {
         return NULL;
@@ -425,6 +439,10 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "NoiseFilter", NoiseFilterType);
 
     PyModule_AddObject(m, "Afc", AfcType);
+
+    PyModule_AddObject(m, "SitorDecoder", SitorDecoderType);
+
+    PyModule_AddObject(m, "Ccir476Decoder", Ccir476DecoderType);
 
     PyObject* csdrVersion = PyUnicode_FromStringAndSize(Csdr::version.c_str(), Csdr::version.length());
     if (csdrVersion == NULL) return NULL;

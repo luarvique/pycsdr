@@ -76,6 +76,8 @@ setup(
                 "src/sstv.cpp",
                 "src/fax.cpp",
                 "src/afc.cpp",
+                "src/sitor.cpp",
+                "src/ccir476.cpp",
             ],
             language="c++",
             include_dirs=["src"],

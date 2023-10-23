@@ -4,9 +4,19 @@
 #include <csdr/fec.hpp>
 
 static int FecDecoder_init(FecDecoder* self, PyObject* args, PyObject* kwds) {
+    static char* kwlist[] = {
+        (char *)"size",
+        NULL
+    };
+
+    unsigned int fecSize = 5;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|I", kwlist, &fecSize)) {
+        return -1;
+    }
+
     self->inputFormat = FORMAT_CHAR;
     self->outputFormat = FORMAT_CHAR;
-    self->setModule(new Csdr::FecDecoder());
+    self->setModule(new Csdr::FecDecoder(fecSize));
 
     return 0;
 }

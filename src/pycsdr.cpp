@@ -46,6 +46,7 @@
 #include "afc.hpp"
 #include "sitor.hpp"
 #include "ccir476.hpp"
+#include "fec.hpp"
 
 #include <csdr/version.hpp>
 
@@ -345,6 +346,12 @@ PyInit_modules(void) {
     PyObject* Ccir476DecoderType = PyType_FromSpecWithBases(&Ccir476DecoderSpec, bases);
     if (Ccir476DecoderType == NULL) return NULL;
 
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* FecDecoderType = PyType_FromSpecWithBases(&FecDecoderSpec, bases);
+    if (FecDecoderType == NULL) return NULL;
+
     PyObject *m = PyModule_Create(&pycsdrmodule);
     if (m == NULL) {
         return NULL;
@@ -443,6 +450,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "SitorDecoder", SitorDecoderType);
 
     PyModule_AddObject(m, "Ccir476Decoder", Ccir476DecoderType);
+
+    PyModule_AddObject(m, "FecDecoder", Ccir476DecoderType);
 
     PyObject* csdrVersion = PyUnicode_FromStringAndSize(Csdr::version.c_str(), Csdr::version.length());
     if (csdrVersion == NULL) return NULL;

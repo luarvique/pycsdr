@@ -4,16 +4,24 @@
 #include <csdr/sitor.hpp>
 
 static int SitorDecoder_init(SitorDecoder* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "invert", NULL};
+    static char* kwlist[] = {
+        (char*) "jitter",
+        (char*) "invert",
+        NULL
+    };
 
+    int jitter = 4;
     int invert = false;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|p", kwlist, &invert)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|Ip", kwlist, &jitter, &invert)) {
         return -1;
     }
 
+    // Make sure provided jitter value makes sense
+    jitter = jitter<0? 0 : jitter>6? 6 : jitter;
+
     self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;
-    self->setModule(new Csdr::SitorDecoder((bool) invert));
+    self->setModule(new Csdr::SitorDecoder((unsigned char) jitter, (bool) invert));
 
     return 0;
 }

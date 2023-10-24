@@ -4,9 +4,16 @@
 #include <csdr/ccir476.hpp>
 
 static int Ccir476Decoder_init(Ccir476Decoder* self, PyObject* args, PyObject* kwds) {
+    static char* kwlist[] = {(char*) "fec", NULL};
+
+    int fec = true;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|p", kwlist, &fec)) {
+        return -1;
+    }
+
     self->inputFormat = FORMAT_CHAR;
     self->outputFormat = FORMAT_CHAR;
-    self->setModule(new Csdr::Ccir476Decoder());
+    self->setModule(new Csdr::Ccir476Decoder((bool) fec));
 
     return 0;
 }

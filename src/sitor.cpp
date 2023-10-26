@@ -10,7 +10,7 @@ static int SitorDecoder_init(SitorDecoder* self, PyObject* args, PyObject* kwds)
         NULL
     };
 
-    int jitter = 4;
+    int jitter = 1;
     int invert = false;
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|Ip", kwlist, &jitter, &invert)) {
         return -1;

@@ -1,3 +1,10 @@
+pycsdr (0.18.16) bullseye jammy; urgency=low
+
+  * Synchronizing with csdr 0.18.16.
+  * Added SITOR and CCIR476+FEC decoders.
+
+ -- Marat Fayzullin <luarvique@gmail.com>  Sat, 28 Oct 2023 16:12:00 +0000
+
 pycsdr (0.18.15) bullseye jammy; urgency=low
 
   * Incrementing library version to match original PyCSDR 0.18.12.

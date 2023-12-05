@@ -78,6 +78,7 @@ setup(
                 "src/afc.cpp",
                 "src/sitor.cpp",
                 "src/ccir476.cpp",
+                "src/dsc.cpp",
             ],
             language="c++",
             include_dirs=["src"],

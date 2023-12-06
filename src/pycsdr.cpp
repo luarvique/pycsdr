@@ -47,6 +47,7 @@
 #include "sitor.hpp"
 #include "ccir476.hpp"
 #include "dsc.hpp"
+#include "ccir493.hpp"
 
 #include <csdr/version.hpp>
 
@@ -352,6 +353,12 @@ PyInit_modules(void) {
     PyObject* DscDecoderType = PyType_FromSpecWithBases(&DscDecoderSpec, bases);
     if (DscDecoderType == NULL) return NULL;
 
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* Ccir493DecoderType = PyType_FromSpecWithBases(&Ccir493DecoderSpec, bases);
+    if (Ccir493DecoderType == NULL) return NULL;
+
     PyObject *m = PyModule_Create(&pycsdrmodule);
     if (m == NULL) {
         return NULL;
@@ -452,6 +459,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "Ccir476Decoder", Ccir476DecoderType);
 
     PyModule_AddObject(m, "DscDecoder", DscDecoderType);
+
+    PyModule_AddObject(m, "Ccir493Decoder", Ccir493DecoderType);
 
     PyObject* csdrVersion = PyUnicode_FromStringAndSize(Csdr::version.c_str(), Csdr::version.length());
     if (csdrVersion == NULL) return NULL;

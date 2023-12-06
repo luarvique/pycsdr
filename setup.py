@@ -79,6 +79,7 @@ setup(
                 "src/sitor.cpp",
                 "src/ccir476.cpp",
                 "src/dsc.cpp",
+                "src/ccir493.cpp",
             ],
             language="c++",
             include_dirs=["src"],

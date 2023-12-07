@@ -6,19 +6,19 @@
 static int Ccir493Decoder_init(Ccir493Decoder* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
         (char*) "fec",
-        (char*) "allowErrors",
+        (char*) "invert",
         NULL
     };
 
-    unsigned int allowErrors = 16;
+    int invert = false;
     int fec = true;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|pI", kwlist, &fec, &allowErrors)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|pp", kwlist, &fec, &invert)) {
         return -1;
     }
 
-    self->inputFormat = FORMAT_SHORT;
+    self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;
-    self->setModule(new Csdr::Ccir493Decoder((bool) fec, allowErrors));
+    self->setModule(new Csdr::Ccir493Decoder((bool) fec, (bool) invert));
 
     return 0;
 }

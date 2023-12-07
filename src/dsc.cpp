@@ -4,19 +4,9 @@
 #include <csdr/dsc.hpp>
 
 static int DscDecoder_init(DscDecoder* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {
-        (char*) "invert",
-        NULL
-    };
-
-    int invert = false;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|p", kwlist, &invert)) {
-        return -1;
-    }
-
-    self->inputFormat = FORMAT_FLOAT;
-    self->outputFormat = FORMAT_SHORT;
-    self->setModule(new Csdr::DscDecoder((bool) invert));
+    self->inputFormat = FORMAT_CHAR;
+    self->outputFormat = FORMAT_CHAR;
+    self->setModule(new Csdr::DscDecoder());
 
     return 0;
 }

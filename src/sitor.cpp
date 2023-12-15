@@ -6,13 +6,15 @@
 static int SitorDecoder_init(SitorDecoder* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
         (char*) "jitter",
+        (char*) "allowErrors",
         (char*) "invert",
         NULL
     };
 
     int jitter = 1;
+    int allowErrors = 16;
     int invert = false;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|Ip", kwlist, &jitter, &invert)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|IIp", kwlist, &jitter, &allowErrors, &invert)) {
         return -1;
     }
 
@@ -21,7 +23,7 @@ static int SitorDecoder_init(SitorDecoder* self, PyObject* args, PyObject* kwds)
 
     self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;
-    self->setModule(new Csdr::SitorDecoder((unsigned char) jitter, (bool) invert));
+    self->setModule(new Csdr::SitorDecoder(jitter, allowErrors, (bool) invert));
 
     return 0;
 }

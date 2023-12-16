@@ -44,7 +44,7 @@
 #include "sstv.hpp"
 #include "fax.hpp"
 #include "afc.hpp"
-#include "sitor.hpp"
+#include "sitorb.hpp"
 #include "ccir476.hpp"
 #include "dsc.hpp"
 #include "ccir493.hpp"
@@ -338,8 +338,8 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
-    PyObject* SitorDecoderType = PyType_FromSpecWithBases(&SitorDecoderSpec, bases);
-    if (SitorDecoderType == NULL) return NULL;
+    PyObject* SitorBDecoderType = PyType_FromSpecWithBases(&SitorBDecoderSpec, bases);
+    if (SitorBDecoderType == NULL) return NULL;
 
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
@@ -454,7 +454,7 @@ PyInit_modules(void) {
 
     PyModule_AddObject(m, "Afc", AfcType);
 
-    PyModule_AddObject(m, "SitorDecoder", SitorDecoderType);
+    PyModule_AddObject(m, "SitorBDecoder", SitorBDecoderType);
 
     PyModule_AddObject(m, "Ccir476Decoder", Ccir476DecoderType);
 

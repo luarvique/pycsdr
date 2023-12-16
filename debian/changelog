@@ -1,3 +1,12 @@
+pycsdr (0.18.17) bullseye jammy; urgency=low
+
+  * Synchronizing with csdr 0.18.17.
+  * Added experimental CCIR493 and DSC decoders.
+  * Refactored and improved SITOR-B and CCIR476 decoders.
+  * Fixed CW decoder to print underscores for unrecognized characters.
+
+ -- Marat Fayzullin <luarvique@gmail.com>  Mon, 18 Dec 2023 16:12:00 +0000
+
 pycsdr (0.18.16) bullseye jammy; urgency=low
 
   * Synchronizing with csdr 0.18.16.

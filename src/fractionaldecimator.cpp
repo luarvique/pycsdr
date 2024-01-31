@@ -22,7 +22,7 @@ static int FractionalDecimator_init(FractionalDecimator* self, PyObject* args, P
     float decimation = 0.0f;
     unsigned int numPolyPoints = 12;
     int prefilter = false;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!f|Ib", kwlist, FORMAT_TYPE, &format, &decimation, &numPolyPoints, &prefilter)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!f|Ip", kwlist, FORMAT_TYPE, &format, &decimation, &numPolyPoints, &prefilter)) {
         return -1;
     }
 
@@ -31,11 +31,13 @@ static int FractionalDecimator_init(FractionalDecimator* self, PyObject* args, P
     } else if (format == FORMAT_COMPLEX_FLOAT) {
         setupDecimator<Csdr::complex<float>>(self, decimation, numPolyPoints, prefilter);
     } else {
-        Py_DECREF(format);
         PyErr_SetString(PyExc_ValueError, "unsupported fractional decimator format");
         return -1;
     }
+
+    Py_INCREF(format);
     self->inputFormat = format;
+    Py_INCREF(format);
     self->outputFormat = format;
 
     return 0;

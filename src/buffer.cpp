@@ -20,8 +20,6 @@ static int Buffer_init(Buffer* self, PyObject* args, PyObject* kwds) {
         return -1;
     }
 
-    Py_INCREF(self->writerFormat);
-
     if (size == 0) {
         size = DEFAULT_BUFFER_SIZE;
     }
@@ -48,11 +46,16 @@ static int Buffer_init(Buffer* self, PyObject* args, PyObject* kwds) {
         return -1;
     }
 
+    Py_INCREF(self->writerFormat);
+
     return 0;
 }
 
 static int Buffer_finalize(Buffer* self) {
-    Py_DECREF(self->writerFormat);
+    // can be null if an error occured during Buffer_init()
+    if (self->writerFormat != NULL) {
+        Py_DECREF(self->writerFormat);
+    }
     delete self->writer;
     return 0;
 }

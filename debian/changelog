@@ -1,3 +1,11 @@
+pycsdr (0.18.18) bullseye jammy; urgency=low
+
+  * Merged changes from Jakob Ketterl's development branch.
+  * [jketterl] Synchronized with latest CSDR changes.
+  * [jketterl] Fixes to reference counting.
+
+ -- Marat Fayzullin <luarvique@gmail.com>  Mon, 5 Feb 2024 16:12:00 +0000
+
 pycsdr (0.18.17) bullseye jammy; urgency=low
 
   * Synchronizing with csdr 0.18.17.

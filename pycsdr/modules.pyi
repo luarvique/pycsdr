@@ -209,7 +209,7 @@ class AdpcmEncoder(Module):
 
 
 class Downmix(Module):
-    def __init__(self, channels: int = 2):
+    def __init__(self, format: Format, channels: int = 2):
         ...
 
 
@@ -250,6 +250,9 @@ class Lowpass(Module):
 
 class ExecModule(Module):
     def __init__(self, inFormat: Format, outFormat: Format, args: list[str], flushSize: int = 0):
+        ...
+
+    def setArgs(self, args: list[str]) -> None:
         ...
 
     # sends a SIGHUP to the child process. check if this feature is available on the program in use.

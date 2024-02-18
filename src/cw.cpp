@@ -25,8 +25,21 @@ static int CwDecoder_init(CwDecoder* self, PyObject* args, PyObject* kwds) {
     return 0;
 }
 
+static PyObject* CwDecoder_reset(CwDecoder* self) {
+    ((Csdr::CwDecoder<Csdr::complex<float>> *)(self->module))->reset();
+    Py_RETURN_NONE;
+}
+
+static PyMethodDef CwDecoder_methods[] = {
+    {"reset", (PyCFunction) CwDecoder_reset, METH_NOARGS,
+     "reset decoder state"
+    },
+    {NULL}  /* Sentinel */
+};
+
 static PyType_Slot CwDecoderSlots[] = {
     {Py_tp_init, (void*) CwDecoder_init},
+    {Py_tp_methods, CwDecoder_methods},
     {0, 0}
 };
 

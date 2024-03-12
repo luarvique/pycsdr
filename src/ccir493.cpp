@@ -5,18 +5,20 @@
 
 static int Ccir493Decoder_init(Ccir493Decoder* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
+        (char*) "allowErrors",
         (char*) "invert",
         NULL
     };
 
+    int allowErrors = 4;
     int invert = false;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|p", kwlist, &invert)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|Ip", kwlist, &allowErrors, &invert)) {
         return -1;
     }
 
     self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;
-    self->setModule(new Csdr::Ccir493Decoder((bool) invert));
+    self->setModule(new Csdr::Ccir493Decoder(allowErrors, (bool) invert));
 
     return 0;
 }

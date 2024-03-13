@@ -28,13 +28,14 @@ static int convertArgs(PyObject* args_python, std::vector<std::string>& args_vec
 }
 
 static int ExecModule_init(ExecModule* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "args", (char*) "inFormat", (char*) "outFormat", (char*) "flushSize", NULL};
+    static char* kwlist[] = {(char*) "args", (char*) "inFormat", (char*) "outFormat", (char*) "flushSize", (char*) "doNotKill", NULL};
 
     PyObject* inFormat;
     PyObject* outFormat;
     PyObject* args_python = NULL;
     unsigned int flushSize = 0;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!O!O!|I", kwlist, FORMAT_TYPE, &inFormat, FORMAT_TYPE, &outFormat, &PyList_Type, &args_python, &flushSize)) {
+    unsigned int doNotKill = false;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!O!O!|Ip", kwlist, FORMAT_TYPE, &inFormat, FORMAT_TYPE, &outFormat, &PyList_Type, &args_python, &flushSize, &doNotKill)) {
         return -1;
     }
     std::vector<std::string> args_vector;
@@ -44,41 +45,41 @@ static int ExecModule_init(ExecModule* self, PyObject* args, PyObject* kwds) {
 
     if (inFormat == FORMAT_SHORT) {
         if (outFormat == FORMAT_SHORT) {
-            self->setModule(new Csdr::ExecModule<short, short>(args_vector, flushSize));
+            self->setModule(new Csdr::ExecModule<short, short>(args_vector, flushSize, (bool) doNotKill));
         } else if (outFormat == FORMAT_CHAR) {
-            self->setModule(new Csdr::ExecModule<short, unsigned char>(args_vector, flushSize));
+            self->setModule(new Csdr::ExecModule<short, unsigned char>(args_vector, flushSize, (bool) doNotKill));
         } else {
             PyErr_SetString(PyExc_ValueError, "invalid output format");
             return -1;
         }
     } else if (inFormat == FORMAT_COMPLEX_SHORT) {
         if (outFormat == FORMAT_SHORT) {
-            self->setModule(new Csdr::ExecModule<Csdr::complex<short>, short>(args_vector, flushSize));
+            self->setModule(new Csdr::ExecModule<Csdr::complex<short>, short>(args_vector, flushSize, (bool) doNotKill));
         } else if (outFormat == FORMAT_CHAR) {
-            self->setModule(new Csdr::ExecModule<Csdr::complex<short>, unsigned char>(args_vector, flushSize));
+            self->setModule(new Csdr::ExecModule<Csdr::complex<short>, unsigned char>(args_vector, flushSize, (bool) doNotKill));
         } else {
             PyErr_SetString(PyExc_ValueError, "invalid output format");
             return -1;
         }
     } else if (inFormat == FORMAT_CHAR) {
         if (outFormat == FORMAT_CHAR) {
-            self->setModule(new Csdr::ExecModule<unsigned char, unsigned char>(args_vector, flushSize));
+            self->setModule(new Csdr::ExecModule<unsigned char, unsigned char>(args_vector, flushSize, (bool) doNotKill));
         } else if (outFormat == FORMAT_FLOAT) {
-            self->setModule(new Csdr::ExecModule<unsigned char, float>(args_vector, flushSize));
+            self->setModule(new Csdr::ExecModule<unsigned char, float>(args_vector, flushSize, (bool) doNotKill));
         } else {
             PyErr_SetString(PyExc_ValueError, "invalid output format");
             return -1;
         }
     } else if (inFormat == FORMAT_COMPLEX_FLOAT) {
         if (outFormat == FORMAT_CHAR) {
-            self->setModule(new Csdr::ExecModule<Csdr::complex<float>, unsigned char>(args_vector, flushSize));
+            self->setModule(new Csdr::ExecModule<Csdr::complex<float>, unsigned char>(args_vector, flushSize, (bool) doNotKill));
         } else {
             PyErr_SetString(PyExc_ValueError, "invalid output format");
             return -1;
         }
     } else if (inFormat == FORMAT_COMPLEX_CHAR) {
         if (outFormat == FORMAT_SHORT) {
-            self->setModule(new Csdr::ExecModule<Csdr::complex<unsigned char>, short>(args_vector, flushSize));
+            self->setModule(new Csdr::ExecModule<Csdr::complex<unsigned char>, short>(args_vector, flushSize, (bool) doNotKill));
         } else {
             PyErr_SetString(PyExc_ValueError, "invalid output format");
             return -1;

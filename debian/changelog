@@ -1,3 +1,11 @@
+pycsdr (0.18.21) bullseye jammy; urgency=low
+
+  * Added doNotKill option to ExecModule.
+  * Added allowErrors option to CCIR493.
+  * Improved SITORB and CCIR493 decoders.
+
+ -- Marat Fayzullin <luarvique@gmail.com>  Mon, 18 Mar 2024 16:12:00 +0000
+
 pycsdr (0.18.20) bullseye jammy; urgency=low
 
   * Synchronizing with csdr 0.18.20.

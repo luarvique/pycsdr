@@ -80,6 +80,7 @@ setup(
                 "src/ccir476.cpp",
                 "src/dsc.cpp",
                 "src/ccir493.cpp",
+                "src/navtex.cpp",
             ],
             language="c++",
             include_dirs=["src"],

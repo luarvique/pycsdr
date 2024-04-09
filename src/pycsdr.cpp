@@ -48,6 +48,7 @@
 #include "ccir476.hpp"
 #include "dsc.hpp"
 #include "ccir493.hpp"
+#include "navtex.hpp"
 
 #include <csdr/version.hpp>
 
@@ -359,6 +360,12 @@ PyInit_modules(void) {
     PyObject* Ccir493DecoderType = PyType_FromSpecWithBases(&Ccir493DecoderSpec, bases);
     if (Ccir493DecoderType == NULL) return NULL;
 
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
+    PyObject* NavtexDecoderType = PyType_FromSpecWithBases(&NavtexDecoderSpec, bases);
+    if (NavtexDecoderType == NULL) return NULL;
+
     PyObject *m = PyModule_Create(&pycsdrmodule);
     if (m == NULL) {
         return NULL;
@@ -461,6 +468,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "DscDecoder", DscDecoderType);
 
     PyModule_AddObject(m, "Ccir493Decoder", Ccir493DecoderType);
+
+    PyModule_AddObject(m, "NavtexDecoder", NavtexDecoderType);
 
     PyObject* csdrVersion = PyUnicode_FromStringAndSize(Csdr::version.c_str(), Csdr::version.length());
     if (csdrVersion == NULL) return NULL;

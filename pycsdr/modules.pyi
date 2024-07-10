@@ -263,6 +263,10 @@ class ExecModule(Module):
     def restart(self) -> None:
         ...
 
+class Throttle(Module):
+    def __init__(self, format: Format, rate: int, chunkSize: int = 8096):
+        ...
+
 class CwDecoder(Module):
     def __init__(self):
         ...

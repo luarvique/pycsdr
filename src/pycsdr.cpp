@@ -38,6 +38,7 @@
 #include "baudot.hpp"
 #include "lowpass.hpp"
 #include "exec.hpp"
+#include "throttle.hpp"
 #include "noisefilter.hpp"
 #include "cw.hpp"
 #include "mfrtty.hpp"
@@ -303,6 +304,12 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
+    PyObject* ThrottleType = PyType_FromSpecWithBases(&ThrottleSpec, bases);
+    if (ThrottleType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
     PyObject* CwDecoderType = PyType_FromSpecWithBases(&CwDecoderSpec, bases);
     if (CwDecoderType == NULL) return NULL;
 
@@ -448,6 +455,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "Lowpass", LowpassType);
 
     PyModule_AddObject(m, "ExecModule", ExecModuleType);
+
+    PyModule_AddObject(m, "Throttle", ThrottleType);
 
     PyModule_AddObject(m, "CwDecoder", CwDecoderType);
 

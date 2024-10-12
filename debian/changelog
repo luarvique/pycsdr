@@ -1,13 +1,15 @@
 pycsdr (0.18.25) bullseye jammy; urgency=low
 
   * Syncing versions with the latest CSDR.
-  * Added PD50, PD90, PD120, PD160, PD180, PD240 SSTV modes.
+  * Now marking SSTV BMPs with 0x73 at offset 7.
+  * Added PD50, PD90, PD120, PD160, PD180, PD240, PD290 SSTV modes.
   * Added Wraase SC2-30, SC2-60, SC2-120 SSTV modes.
-  * Added Scottie 3 and Scottie 4 SSTV modes.
-  * Added Martin 3 and Martin 4 SSTV modes.
+  * Added Scottie 3 and Scottie 4 SSTV modes (please test).
+  * Added Martin 3 and Martin 4 SSTV modes (please test).
+  * Added Robot 12 and Robot 24 SSTV modes (please test).
   * Added AVT-90 SSTV mode.
 
- -- Marat Fayzullin <luarvique@gmail.com>  Mon, 7 Oct 2024 16:12:00 +0000
+ -- Marat Fayzullin <luarvique@gmail.com>  Mon, 14 Oct 2024 16:12:00 +0000
 
 pycsdr (0.18.24) bullseye jammy; urgency=low
 

@@ -25,7 +25,7 @@ static PyObject* checkRunner(Module* self) {
     if (self->reader != nullptr && self->writer != nullptr) {
         std::lock_guard<std::mutex> lock(self->runnerMutex);
         if (self->runner == nullptr || !self->runner->isRunning()) {
-            delete self->runner;
+            if (self->runner != nullptr) delete self->runner;
             self->runner = new Csdr::AsyncRunner(self->module);
         }
     } else {

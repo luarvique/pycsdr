@@ -1,3 +1,12 @@
+pycsdr (0.18.27) bullseye jammy; urgency=low
+
+  * Syncing versions with the latest CSDR.
+  * Refactored SSTV decoder code.
+  * Eliminated FFTW3 race condition in SSTV decoder.
+  * Disabled AVT-90 SSTV mode due to quality concerns.
+
+ -- Marat Fayzullin <luarvique@gmail.com>  Mon, 20 Jan 2025 16:12:00 +0000
+
 pycsdr (0.18.26) bullseye jammy; urgency=low
 
   * Syncing versions with the latest CSDR.

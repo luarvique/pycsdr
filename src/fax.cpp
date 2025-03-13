@@ -8,6 +8,7 @@ static int FaxDecoder_init(FaxDecoder* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
         (char *)"sampleRate",
         (char *)"lpm",
+        (char *)"maxLines",
         (char *)"dbgTime",
         (char *)"postProcess",
         (char *)"color",
@@ -17,11 +18,12 @@ static int FaxDecoder_init(FaxDecoder* self, PyObject* args, PyObject* kwds) {
 
     unsigned int sampleRate  = 44100;
     unsigned int lpm         = 120;
+    unsigned int maxLines    = Csdr::FaxDecoder<float>::HEIGHT_IOC576;
     unsigned int postProcess = 0;
     unsigned int colorMode   = 0;
     unsigned int amMode      = 0;
     unsigned int dbgTime     = 0;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|IIppp", kwlist, &sampleRate, &lpm, &dbgTime, &postProcess, &colorMode, &amMode)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I|IIIppp", kwlist, &sampleRate, &lpm, &maxLines, &dbgTime, &postProcess, &colorMode, &amMode)) {
         return -1;
     }
 
@@ -30,7 +32,7 @@ static int FaxDecoder_init(FaxDecoder* self, PyObject* args, PyObject* kwds) {
         (colorMode?   Csdr::FaxDecoder<float>::OPT_COLOR : 0) |
         (amMode?      Csdr::FaxDecoder<float>::OPT_AM    : 0);
 
-    self->setModule(new Csdr::FaxDecoder<float>(sampleRate, lpm, options, dbgTime));
+    self->setModule(new Csdr::FaxDecoder<float>(sampleRate, lpm, maxLines, options, dbgTime));
 
     self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;

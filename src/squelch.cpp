@@ -4,28 +4,44 @@
 
 #include <csdr/power.hpp>
 
-static int Squelch_init(Squelch* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "decimation", (char*) "reportInterval", NULL};
+static void reportPower(Squelch* self, float level) {
+    if ((self->reportCounter--) > 0) return;
+    self->reportCounter = self->reportInterval;
 
+    if (self->powerWriter) {
+        auto writer = dynamic_cast<Csdr::Writer<float>*>(self->powerWriter->writer);
+        if (writer->writeable()) {
+            *(writer->getWritePointer()) = level;
+            writer->advance(1);
+        }
+    }
+}
+
+static int Squelch_init(Squelch* self, PyObject* args, PyObject* kwds) {
+    static char* kwlist[] = {(char*) "format", (char*) "decimation", (char*) "reportInterval", NULL};
+
+    PyObject *format = nullptr;
     unsigned int decimation = 0;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "II", kwlist, &decimation, &self->reportInterval)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!II", kwlist, FORMAT_TYPE, &format, &decimation, &self->reportInterval)) {
         return -1;
     }
 
-    self->inputFormat = FORMAT_COMPLEX_FLOAT;
-    self->outputFormat = FORMAT_COMPLEX_FLOAT;
+    self->inputFormat = format;
+    self->outputFormat = format;
     self->reportCounter = self->reportInterval;
-    self->setModule(new Csdr::Squelch(decimation, [self] (float level) {
-        if (self->reportCounter-- > 0) return;
-        self->reportCounter = self->reportInterval;
 
-        if (self->powerWriter == nullptr) return;
-
-        auto writer = dynamic_cast<Csdr::Writer<float>*>(self->powerWriter->writer);
-        if (!writer->writeable()) return;
-        *(writer->getWritePointer()) = level;
-        writer->advance(1);
-    }));
+    if (format == FORMAT_COMPLEX_FLOAT) {
+        self->setModule(new Csdr::Squelch<complex<float>>(decimation,
+            [self] (float level) { reportPower(self, level); }
+        ));
+    } else if (format == FORMAT_FLOAT) {
+        self->setModule(new Csdr::Squelch<float>(decimation,
+            [self] (float level) { reportPower(self, level); }
+        ));
+    } else {
+        PyErr_SetString(PyExc_ValueError, "invalid format");
+        return -1;
+    }
 
     return 0;
 }

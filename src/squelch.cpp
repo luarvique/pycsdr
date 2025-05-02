@@ -18,11 +18,12 @@ static void reportPower(Squelch* self, float level) {
 }
 
 static int Squelch_init(Squelch* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "format", (char*) "decimation", (char*) "reportInterval", NULL};
+    static char* kwlist[] = {(char*) "format", (char*)"length", (char*) "decimation", (char*) "reportInterval", NULL};
 
     PyObject *format = nullptr;
     unsigned int decimation = 0;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!II", kwlist, FORMAT_TYPE, &format, &decimation, &self->reportInterval)) {
+    unsigned int length = 1024;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!III", kwlist, FORMAT_TYPE, &format, &length, &decimation, &self->reportInterval)) {
         return -1;
     }
 
@@ -31,11 +32,13 @@ static int Squelch_init(Squelch* self, PyObject* args, PyObject* kwds) {
     self->reportCounter = self->reportInterval;
 
     if (format == FORMAT_COMPLEX_FLOAT) {
-        self->setModule(new Csdr::Squelch<Csdr::complex<float>>(decimation,
+        self->setModule(new Csdr::Squelch<Csdr::complex<float>>(
+            length, decimation,
             [self] (float level) { reportPower(self, level); }
         ));
     } else if (format == FORMAT_FLOAT) {
-        self->setModule(new Csdr::Squelch<float>(decimation,
+        self->setModule(new Csdr::Squelch<float>(
+            length, decimation,
             [self] (float level) { reportPower(self, level); }
         ));
     } else {

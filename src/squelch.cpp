@@ -19,14 +19,14 @@ static void reportPower(Squelch* self, float level) {
 }
 
 static int Squelch_init(Squelch* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "format", (char*)"length", (char*) "decimation", (char*)flushLength, (char*) "reportInterval", NULL};
+    static char* kwlist[] = {(char*) "format", (char*)"length", (char*) "decimation", (char*)"flushLength", (char*) "reportInterval", NULL};
 
     // default reporting interval
     self->reportInterval = 1;
 
     PyObject *format = nullptr;
     unsigned int length = 1024;
-    unsigned int decimation = 0;
+    unsigned int decimation = 1;
     unsigned int flushLength = 1024 * 5;
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!IIII", kwlist, FORMAT_TYPE, &format, &length, &decimation, &flushLength, &self->reportInterval)) {
         return -1;

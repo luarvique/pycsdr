@@ -31,7 +31,7 @@ static int Squelch_init(Squelch* self, PyObject* args, PyObject* kwds) {
     self->reportCounter = self->reportInterval;
 
     if (format == FORMAT_COMPLEX_FLOAT) {
-        self->setModule(new Csdr::Squelch<complex<float>>(decimation,
+        self->setModule(new Csdr::Squelch<Csdr::complex<float>>(decimation,
             [self] (float level) { reportPower(self, level); }
         ));
     } else if (format == FORMAT_FLOAT) {
@@ -54,7 +54,11 @@ static PyObject* Squelch_setSquelchLevel(Squelch* self, PyObject* args, PyObject
         return NULL;
     }
 
-    dynamic_cast<Csdr::Squelch*>(self->module)->setSquelch(level);
+    if (self->inputFormat == FORMAT_COMPLEX_FLOAT) {
+        dynamic_cast<Csdr::Squelch<Csdr::complex<float>>*>(self->module)->setSquelch(level);
+    } else if (self->inputFormat == FORMAT_FLOAT) {
+        dynamic_cast<Csdr::Squelch<float>*>(self->module)->setSquelch(level);
+    }
 
     Py_RETURN_NONE;
 }

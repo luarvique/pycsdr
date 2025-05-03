@@ -4,28 +4,52 @@
 
 #include <csdr/power.hpp>
 
-static int Squelch_init(Squelch* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "decimation", (char*) "reportInterval", NULL};
+static void reportPower(Squelch* self, float level) {
+    if (--self->reportCounter <= 0) {
+        self->reportCounter = self->reportInterval;
 
-    unsigned int decimation = 0;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "II", kwlist, &decimation, &self->reportInterval)) {
+        if (self->powerWriter) {
+            auto writer = dynamic_cast<Csdr::Writer<float>*>(self->powerWriter->writer);
+            if (writer->writeable()) {
+                *(writer->getWritePointer()) = level;
+                writer->advance(1);
+            }
+        }
+    }
+}
+
+static int Squelch_init(Squelch* self, PyObject* args, PyObject* kwds) {
+    static char* kwlist[] = {(char*) "format", (char*)"length", (char*) "decimation", (char*)"flushLength", (char*) "reportInterval", NULL};
+
+    // default reporting interval
+    self->reportInterval = 1;
+
+    PyObject *format = nullptr;
+    unsigned int length = 1024;
+    unsigned int decimation = 1;
+    unsigned int flushLength = 1024 * 5;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!IIII", kwlist, FORMAT_TYPE, &format, &length, &decimation, &flushLength, &self->reportInterval)) {
         return -1;
     }
 
-    self->inputFormat = FORMAT_COMPLEX_FLOAT;
-    self->outputFormat = FORMAT_COMPLEX_FLOAT;
+    self->inputFormat = format;
+    self->outputFormat = format;
     self->reportCounter = self->reportInterval;
-    self->setModule(new Csdr::Squelch(decimation, [self] (float level) {
-        if (self->reportCounter-- > 0) return;
-        self->reportCounter = self->reportInterval;
 
-        if (self->powerWriter == nullptr) return;
-
-        auto writer = dynamic_cast<Csdr::Writer<float>*>(self->powerWriter->writer);
-        if (!writer->writeable()) return;
-        *(writer->getWritePointer()) = level;
-        writer->advance(1);
-    }));
+    if (format == FORMAT_COMPLEX_FLOAT) {
+        self->setModule(new Csdr::Squelch<Csdr::complex<float>>(
+            length, decimation, flushLength,
+            [self] (float level) { reportPower(self, level); }
+        ));
+    } else if (format == FORMAT_FLOAT) {
+        self->setModule(new Csdr::Squelch<float>(
+            length, decimation, flushLength,
+            [self] (float level) { reportPower(self, level); }
+        ));
+    } else {
+        PyErr_SetString(PyExc_ValueError, "invalid format");
+        return -1;
+    }
 
     return 0;
 }
@@ -38,7 +62,11 @@ static PyObject* Squelch_setSquelchLevel(Squelch* self, PyObject* args, PyObject
         return NULL;
     }
 
-    dynamic_cast<Csdr::Squelch*>(self->module)->setSquelch(level);
+    if (self->inputFormat == FORMAT_COMPLEX_FLOAT) {
+        dynamic_cast<Csdr::Squelch<Csdr::complex<float>>*>(self->module)->setSquelch(level);
+    } else if (self->inputFormat == FORMAT_FLOAT) {
+        dynamic_cast<Csdr::Squelch<float>*>(self->module)->setSquelch(level);
+    }
 
     Py_RETURN_NONE;
 }

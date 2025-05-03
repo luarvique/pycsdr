@@ -1,3 +1,12 @@
+pycsdr (0.18.30) bullseye jammy; urgency=low
+
+  * Syncing versions with the latest CSDR.
+  * Improved Power and Squelch modules.
+  * Now supporting non-complex Squelch input.
+  * Now supporting float Exec input.
+
+ -- Marat Fayzullin <luarvique@gmail.com>  Tue, 6 May 2025 16:12:00 +0000
+
 pycsdr (0.18.29) bullseye jammy; urgency=low
 
   * Syncing versions with the latest CSDR.

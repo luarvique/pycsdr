@@ -34,7 +34,6 @@ static int Squelch_init(Squelch* self, PyObject* args, PyObject* kwds) {
 
     self->inputFormat = format;
     self->outputFormat = format;
-    self->reportInterval = std::max(self->reportInterval, 1);
     self->reportCounter = self->reportInterval;
 
     if (format == FORMAT_COMPLEX_FLOAT) {
@@ -105,7 +104,6 @@ static PyObject* Squelch_setReportInterval(Squelch* self, PyObject* args, PyObje
         return NULL;
     }
     // reset since this may contain excessively high values
-    self->reportInterval = std::max(self->reportInterval, 1);
     self->reportCounter = self->reportInterval;
 
     Py_RETURN_NONE;

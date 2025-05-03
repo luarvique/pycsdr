@@ -34,7 +34,8 @@ static int Squelch_init(Squelch* self, PyObject* args, PyObject* kwds) {
 
     self->inputFormat = format;
     self->outputFormat = format;
-    self->reportCounter = std::min(self->reportInterval, 1);
+    self->reportInterval = std::min(self->reportInterval, 1);
+    self->reportCounter = self->reportInterval;
 
     if (format == FORMAT_COMPLEX_FLOAT) {
         self->setModule(new Csdr::Squelch<Csdr::complex<float>>(
@@ -104,6 +105,7 @@ static PyObject* Squelch_setReportInterval(Squelch* self, PyObject* args, PyObje
         return NULL;
     }
     // reset since this may contain excessively high values
+    self->reportInterval = std::min(self->reportInterval, 1);
     self->reportCounter = self->reportInterval;
 
     Py_RETURN_NONE;

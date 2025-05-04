@@ -7,7 +7,7 @@
 
 struct Squelch: Module {
     Writer* powerWriter;
-    unsigned int reportInterval;
+    unsigned int reportInterval = 1;
     int reportCounter;
 };
 

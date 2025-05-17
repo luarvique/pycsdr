@@ -1,6 +1,6 @@
 pycsdr (0.18.31) bullseye jammy; urgency=low
 
-  * Added LAGGY AGC option.
+  * Added LAGGY and MID AGC options.
 
  -- Marat Fayzullin <luarvique@gmail.com>  Tue, 20 May 2025 16:12:00 +0000
 

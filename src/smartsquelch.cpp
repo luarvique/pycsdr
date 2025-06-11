@@ -19,17 +19,16 @@ static void reportPower(SmartSquelch* self, float level) {
 }
 
 static int SmartSquelch_init(SmartSquelch* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "format", (char*)"length", (char*) "decimation", (char*)"hangLength", (char*)"flushLength", (char*) "reportInterval", NULL};
+    static char* kwlist[] = {(char*) "format", (char*)"length", (char*)"hangLength", (char*)"flushLength", (char*) "reportInterval", NULL};
 
     // default reporting interval
     self->reportInterval = 1;
 
     PyObject *format = nullptr;
     unsigned int length = 1024;
-    unsigned int decimation = 1;
     unsigned int hangLength = 0;
     unsigned int flushLength = 1024 * 5;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!IIIII", kwlist, FORMAT_TYPE, &format, &length, &decimation, &hangLength, &flushLength, &self->reportInterval)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!IIII", kwlist, FORMAT_TYPE, &format, &length, &hangLength, &flushLength, &self->reportInterval)) {
         return -1;
     }
 

@@ -1,3 +1,10 @@
+pycsdr (0.18.32) bullseye jammy; urgency=low
+
+  * Added SNR computation using FFT.
+  * Added SNR-based "smart squelch".
+
+ -- Marat Fayzullin <luarvique@gmail.com>  Thu, 12 Jun 2025 16:12:00 +0000
+
 pycsdr (0.18.31) bullseye jammy; urgency=low
 
   * Added LAGGY and MID AGC options.

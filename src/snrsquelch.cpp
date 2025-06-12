@@ -1,10 +1,10 @@
-#include "smartsquelch.hpp"
+#include "snrsquelch.hpp"
 #include "types.hpp"
 #include "pycsdr.hpp"
 
-#include <csdr/smartsquelch.hpp>
+#include <csdr/snr.hpp>
 
-static void reportPower(SmartSquelch* self, float level) {
+static void reportPower(SnrSquelch* self, float level) {
     if (--self->reportCounter <= 0) {
         self->reportCounter = self->reportInterval;
 
@@ -18,17 +18,18 @@ static void reportPower(SmartSquelch* self, float level) {
     }
 }
 
-static int SmartSquelch_init(SmartSquelch* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "format", (char*)"length", (char*)"hangLength", (char*)"flushLength", (char*) "reportInterval", NULL};
+static int SnrSquelch_init(SnrSquelch* self, PyObject* args, PyObject* kwds) {
+    static char* kwlist[] = {(char*) "format", (char*)"length", (char*)"fftSize", (char*)"hangLength", (char*)"flushLength", (char*) "reportInterval", NULL};
 
     // default reporting interval
     self->reportInterval = 1;
 
     PyObject *format = nullptr;
     unsigned int length = 1024;
+    unsigned int fftSize = 256;
     unsigned int hangLength = 0;
     unsigned int flushLength = 1024 * 5;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!IIII", kwlist, FORMAT_TYPE, &format, &length, &hangLength, &flushLength, &self->reportInterval)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!IIIII", kwlist, FORMAT_TYPE, &format, &length, &fftSize, &hangLength, &flushLength, &self->reportInterval)) {
         return -1;
     }
 
@@ -37,13 +38,13 @@ static int SmartSquelch_init(SmartSquelch* self, PyObject* args, PyObject* kwds)
     self->reportCounter = self->reportInterval;
 
     if (format == FORMAT_COMPLEX_FLOAT) {
-        self->setModule(new Csdr::SmartSquelch<Csdr::complex<float>>(
-            length, hangLength, flushLength,
+        self->setModule(new Csdr::SnrSquelch<Csdr::complex<float>>(
+            length, fftSize, hangLength, flushLength,
             [self] (float level) { reportPower(self, level); }
         ));
     } else if (format == FORMAT_FLOAT) {
-        self->setModule(new Csdr::SmartSquelch<float>(
-            length, hangLength, flushLength,
+        self->setModule(new Csdr::SnrSquelch<float>(
+            length, fftSize, hangLength, flushLength,
             [self] (float level) { reportPower(self, level); }
         ));
     } else {
@@ -54,7 +55,7 @@ static int SmartSquelch_init(SmartSquelch* self, PyObject* args, PyObject* kwds)
     return 0;
 }
 
-static PyObject* SmartSquelch_setSquelchLevel(SmartSquelch* self, PyObject* args, PyObject* kwds) {
+static PyObject* SnrSquelch_setSquelchLevel(SnrSquelch* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {(char*) "level", NULL};
 
     float level = 0.0f;
@@ -63,15 +64,15 @@ static PyObject* SmartSquelch_setSquelchLevel(SmartSquelch* self, PyObject* args
     }
 
     if (self->inputFormat == FORMAT_COMPLEX_FLOAT) {
-        dynamic_cast<Csdr::SmartSquelch<Csdr::complex<float>>*>(self->module)->setSquelch(level);
+        dynamic_cast<Csdr::SnrSquelch<Csdr::complex<float>>*>(self->module)->setSquelch(level);
     } else if (self->inputFormat == FORMAT_FLOAT) {
-        dynamic_cast<Csdr::SmartSquelch<float>*>(self->module)->setSquelch(level);
+        dynamic_cast<Csdr::SnrSquelch<float>*>(self->module)->setSquelch(level);
     }
 
     Py_RETURN_NONE;
 }
 
-static PyObject* SmartSquelch_setPowerWriter(SmartSquelch* self, PyObject* args, PyObject* kwds) {
+static PyObject* SnrSquelch_setPowerWriter(SnrSquelch* self, PyObject* args, PyObject* kwds) {
     Writer* writer;
 
     static char* kwlist[] = {(char*) "writer", NULL};
@@ -97,7 +98,7 @@ static PyObject* SmartSquelch_setPowerWriter(SmartSquelch* self, PyObject* args,
     Py_RETURN_NONE;
 }
 
-static PyObject* SmartSquelch_setReportInterval(SmartSquelch* self, PyObject* args, PyObject* kwds) {
+static PyObject* SnrSquelch_setReportInterval(SnrSquelch* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {(char*) "reportInterval", NULL};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", kwlist, &self->reportInterval)) {
@@ -109,29 +110,29 @@ static PyObject* SmartSquelch_setReportInterval(SmartSquelch* self, PyObject* ar
     Py_RETURN_NONE;
 }
 
-static PyMethodDef SmartSquelch_methods[] = {
-    {"setSquelchLevel", (PyCFunction) SmartSquelch_setSquelchLevel, METH_VARARGS | METH_KEYWORDS,
+static PyMethodDef SnrSquelch_methods[] = {
+    {"setSquelchLevel", (PyCFunction) SnrSquelch_setSquelchLevel, METH_VARARGS | METH_KEYWORDS,
      "set squelch level"
     },
-    {"setPowerWriter", (PyCFunction) SmartSquelch_setPowerWriter, METH_VARARGS | METH_KEYWORDS,
+    {"setPowerWriter", (PyCFunction) SnrSquelch_setPowerWriter, METH_VARARGS | METH_KEYWORDS,
      "set a writer that will receive power level readouts"
     },
-    {"setReportInterval", (PyCFunction) SmartSquelch_setReportInterval, METH_VARARGS | METH_KEYWORDS,
+    {"setReportInterval", (PyCFunction) SnrSquelch_setReportInterval, METH_VARARGS | METH_KEYWORDS,
      "set the report interval"
     },
     {NULL}  /* Sentinel */
 };
 
-static PyType_Slot SmartSquelchSlots[] = {
-    {Py_tp_init, (void*) SmartSquelch_init},
-    {Py_tp_methods, SmartSquelch_methods},
+static PyType_Slot SnrSquelchSlots[] = {
+    {Py_tp_init, (void*) SnrSquelch_init},
+    {Py_tp_methods, SnrSquelch_methods},
     {0, 0}
 };
 
-PyType_Spec SmartSquelchSpec = {
-    "pycsdr.modules.SmartSquelch",
-    sizeof(SmartSquelch),
+PyType_Spec SnrSquelchSpec = {
+    "pycsdr.modules.SnrSquelch",
+    sizeof(SnrSquelch),
     0,
     Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_FINALIZE,
-    SmartSquelchSlots
+    SnrSquelchSlots
 };

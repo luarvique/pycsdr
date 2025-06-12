@@ -50,7 +50,7 @@
 #include "dsc.hpp"
 #include "ccir493.hpp"
 #include "navtex.hpp"
-#include "smartsquelch.hpp"
+#include "snrsquelch.hpp"
 
 #include <csdr/version.hpp>
 
@@ -377,8 +377,8 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
-    PyObject* SmartSquelchType = PyType_FromSpecWithBases(&SmartSquelchSpec, bases);
-    if (SmartSquelchType == NULL) return NULL;
+    PyObject* SnrSquelchType = PyType_FromSpecWithBases(&SnrSquelchSpec, bases);
+    if (SnrSquelchType == NULL) return NULL;
 
     PyObject *m = PyModule_Create(&pycsdrmodule);
     if (m == NULL) {
@@ -487,7 +487,7 @@ PyInit_modules(void) {
 
     PyModule_AddObject(m, "NavtexDecoder", NavtexDecoderType);
 
-    PyModule_AddObject(m, "SmartSquelch", SmartSquelchType);
+    PyModule_AddObject(m, "SnrSquelch", SnrSquelchType);
 
     PyObject* csdrVersion = PyUnicode_FromStringAndSize(Csdr::version.c_str(), Csdr::version.length());
     if (csdrVersion == NULL) return NULL;

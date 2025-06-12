@@ -5,10 +5,10 @@
 
 #include "module.hpp"
 
-struct SmartSquelch: Module {
+struct SnrSquelch: Module {
     Writer* powerWriter;
     unsigned int reportInterval;
     int reportCounter;
 };
 
-extern PyType_Spec SmartSquelchSpec;
+extern PyType_Spec SnrSquelchSpec;

@@ -82,7 +82,7 @@ setup(
                 "src/dsc.cpp",
                 "src/ccir493.cpp",
                 "src/navtex.cpp",
-                "src/smartsquelch.cpp",
+                "src/snrsquelch.cpp",
             ],
             language="c++",
             include_dirs=["src"],

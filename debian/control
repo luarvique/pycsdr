@@ -3,11 +3,11 @@ Maintainer: Marat Fayzullin <luarvique@gmail.com>
 Section: hamradio
 Priority: optional
 Standards-Version: 4.3.0
-Build-Depends: debhelper (>= 10), dh-python, python3-all (>= 3.5), libpython3-dev (>= 3.5), python3-setuptools, libcsdr-dev (>= 0.18.32)
+Build-Depends: debhelper (>= 10), dh-python, python3-all (>= 3.5), libpython3-dev (>= 3.5), python3-setuptools, libcsdr-dev (>= 0.18.33)
 
 Package: python3-csdr
 Architecture: any
-Depends: libcsdr0 (>= 0.18.32), ${python3:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: libcsdr0 (>= 0.18.33), ${python3:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: Python bindings for libcsdr
  Offers a variety of modules from the csdr software defined radio library for
  digital processing of radio transmission.

@@ -6,20 +6,22 @@
 
 static int NoiseFilter_init(NoiseFilter* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
-        (char*)"threshold", (char*)"fftSize", (char*)"wndSize", NULL
+        (char*)"threshold", (char*)"fftSize", (char*)"wndSize", (char*)"latency", NULL
     };
 
     self->threshold = 0;
     self->fftSize = 4096;
     self->wndSize = 32;
+    self->latency = 5;
     self->noiseFilter = NULL;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|iII", kwlist, &self->threshold, &self->fftSize, &self->wndSize)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|iIII", kwlist, &self->threshold, &self->fftSize, &self->wndSize, &self->latency)) {
         return -1;
     }
 
-    self->noiseFilter = new Csdr::AFNoiseFilter(self->threshold, self->fftSize, self->wndSize);
+    self->noiseFilter = new Csdr::AFNoiseFilter(self->fftSize, self->wndSize, self->latency);
     self->setModule(new Csdr::FilterModule<float>(self->noiseFilter));
+    self->noiseFilter->setThreshold(self->threshold);
 
     Py_INCREF(FORMAT_FLOAT);
     self->inputFormat = FORMAT_FLOAT;
@@ -49,8 +51,9 @@ static PyObject* NoiseFilter_setWndSize(NoiseFilter* self, PyObject* args, PyObj
         return NULL;
     }
 
-    self->noiseFilter = new Csdr::AFNoiseFilter(self->threshold, self->fftSize, self->wndSize);
+    self->noiseFilter = new Csdr::AFNoiseFilter(self->fftSize, self->wndSize, self->latency);
     dynamic_cast<Csdr::FilterModule<float>*>(self->module)->setFilter(self->noiseFilter);
+    self->noiseFilter->setThreshold(self->threshold);
 
     Py_RETURN_NONE;
 }
@@ -62,8 +65,23 @@ static PyObject* NoiseFilter_setFftSize(NoiseFilter* self, PyObject* args, PyObj
         return NULL;
     }
 
-    self->noiseFilter = new Csdr::AFNoiseFilter(self->threshold, self->fftSize, self->wndSize);
+    self->noiseFilter = new Csdr::AFNoiseFilter(self->fftSize, self->wndSize, self->latency);
     dynamic_cast<Csdr::FilterModule<float>*>(self->module)->setFilter(self->noiseFilter);
+    self->noiseFilter->setThreshold(self->threshold);
+
+    Py_RETURN_NONE;
+}
+
+static PyObject* NoiseFilter_setLatency(NoiseFilter* self, PyObject* args, PyObject* kwds) {
+    static char* kwlist[] = { (char*)"latency", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", kwlist, &self->latency)) {
+        return NULL;
+    }
+
+    self->noiseFilter = new Csdr::AFNoiseFilter(self->fftSize, self->wndSize, self->latency);
+    dynamic_cast<Csdr::FilterModule<float>*>(self->module)->setFilter(self->noiseFilter);
+    self->noiseFilter->setThreshold(self->threshold);
 
     Py_RETURN_NONE;
 }
@@ -72,6 +90,7 @@ static PyMethodDef NoiseFilter_methods[] = {
     { "setThreshold", (PyCFunction) NoiseFilter_setThreshold, METH_VARARGS | METH_KEYWORDS, "set filtering threshold in dB" },
     { "setWndSize", (PyCFunction) NoiseFilter_setWndSize, METH_VARARGS | METH_KEYWORDS, "set window size in buckets" },
     { "setFftSize", (PyCFunction) NoiseFilter_setFftSize, METH_VARARGS | METH_KEYWORDS, "set FFT size in buckets" },
+    { "setLatency", (PyCFunction) NoiseFilter_setLatency, METH_VARARGS | METH_KEYWORDS, "set filter latency in FFTs" },
     { NULL }  /* Sentinel */
 };
 

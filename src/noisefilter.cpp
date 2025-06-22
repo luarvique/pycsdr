@@ -12,15 +12,14 @@ static int NoiseFilter_init(NoiseFilter* self, PyObject* args, PyObject* kwds) {
     self->threshold = 0;
     self->fftSize = 4096;
     self->wndSize = 32;
+    self->noiseFilter = NULL;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|iII", kwlist, &self->threshold, &self->fftSize, &self->wndSize)) {
         return -1;
     }
 
-    Csdr::Filter<float>* filter =
-        new Csdr::AFNoiseFilter(self->threshold, self->fftSize, self->wndSize);
-
-    self->setModule(new Csdr::FilterModule<float>(filter));
+    self->noiseFilter = new Csdr::AFNoiseFilter(self->threshold, self->fftSize, self->wndSize);
+    self->setModule(new Csdr::FilterModule<float>(self->noiseFilter));
 
     Py_INCREF(FORMAT_FLOAT);
     self->inputFormat = FORMAT_FLOAT;
@@ -36,10 +35,9 @@ static PyObject* NoiseFilter_setThreshold(NoiseFilter* self, PyObject* args, PyO
         return NULL;
     }
 
-    Csdr::Filter<float>* filter =
-        new Csdr::AFNoiseFilter(self->threshold, self->fftSize, self->wndSize);
-
-    dynamic_cast<Csdr::FilterModule<float>*>(self->module)->setFilter(filter);
+    if (self->noiseFilter) {
+        self->noiseFilter->setThreshold(self->threshold);
+    }
 
     Py_RETURN_NONE;
 }
@@ -51,10 +49,8 @@ static PyObject* NoiseFilter_setWndSize(NoiseFilter* self, PyObject* args, PyObj
         return NULL;
     }
 
-    Csdr::Filter<float>* filter =
-        new Csdr::AFNoiseFilter(self->threshold, self->fftSize, self->wndSize);
-
-    dynamic_cast<Csdr::FilterModule<float>*>(self->module)->setFilter(filter);
+    self->noiseFilter = new Csdr::AFNoiseFilter(self->threshold, self->fftSize, self->wndSize);
+    dynamic_cast<Csdr::FilterModule<float>*>(self->module)->setFilter(self->noiseFilter);
 
     Py_RETURN_NONE;
 }
@@ -66,10 +62,8 @@ static PyObject* NoiseFilter_setFftSize(NoiseFilter* self, PyObject* args, PyObj
         return NULL;
     }
 
-    Csdr::Filter<float>* filter =
-        new Csdr::AFNoiseFilter(self->threshold, self->fftSize, self->wndSize);
-
-    dynamic_cast<Csdr::FilterModule<float>*>(self->module)->setFilter(filter);
+    self->noiseFilter = new Csdr::AFNoiseFilter(self->threshold, self->fftSize, self->wndSize);
+    dynamic_cast<Csdr::FilterModule<float>*>(self->module)->setFilter(self->noiseFilter);
 
     Py_RETURN_NONE;
 }

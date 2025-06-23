@@ -8,11 +8,11 @@
 #include "module.hpp"
 
 struct NoiseFilter: Module {
-    Csdr::AFNoiseFilter *noiseFilter;
+    Csdr::AFNoiseFilter *noiseFilter = NULL;
     int threshold = 0;
-    uint32_t wndSize = 32;
-    uint32_t fftSize = 4096;
-    uint32_t latency = 5;
+    uint32_t wndSize = 8;
+    uint32_t fftSize = 512;
+    uint32_t latency = 4;
 };
 
 extern PyType_Spec NoiseFilterSpec;

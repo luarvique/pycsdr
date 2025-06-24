@@ -10,9 +10,9 @@ static int NoiseFilter_init(NoiseFilter* self, PyObject* args, PyObject* kwds) {
     };
 
     self->threshold = 0;
-    self->fftSize = 512;
-    self->wndSize = 8;
-    self->latency = 4;
+    self->fftSize = 1024;
+    self->wndSize = 16;
+    self->latency = 1;
     self->noiseFilter = NULL;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|iIII", kwlist, &self->threshold, &self->fftSize, &self->wndSize, &self->latency)) {

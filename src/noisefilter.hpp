@@ -10,9 +10,9 @@
 struct NoiseFilter: Module {
     Csdr::AFNoiseFilter *noiseFilter = NULL;
     int threshold = 0;
-    uint32_t wndSize = 8;
-    uint32_t fftSize = 512;
-    uint32_t latency = 4;
+    uint32_t wndSize = 16;
+    uint32_t fftSize = 1024;
+    uint32_t latency = 1;
 };
 
 extern PyType_Spec NoiseFilterSpec;

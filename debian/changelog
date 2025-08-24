@@ -1,3 +1,9 @@
+pycsdr (0.18.36) bullseye jammy; urgency=low
+
+  * Added produceSilence option to SnrSquelch.
+
+ -- Marat Fayzullin <luarvique@gmail.com>  Mon, 25 Aug 2025 16:12:00 +0000
+
 pycsdr (0.18.35) bullseye jammy; urgency=low
 
   * Syncing versions with the latest CSDR.

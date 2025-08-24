@@ -3,6 +3,7 @@
 #include "pycsdr.hpp"
 
 #include <csdr/snr.hpp>
+#include <climits>
 
 static void reportPower(SnrSquelch* self, float level) {
     if (--self->reportCounter <= 0) {
@@ -19,7 +20,11 @@ static void reportPower(SnrSquelch* self, float level) {
 }
 
 static int SnrSquelch_init(SnrSquelch* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "format", (char*)"length", (char*)"fftSize", (char*)"hangLength", (char*)"flushLength", (char*) "reportInterval", NULL};
+    static char* kwlist[] = {
+        (char*) "format", (char*)"length", (char*)"fftSize",
+        (char*)"hangLength", (char*)"flushLength",
+        (char*) "reportInterval", "produceSilence", NULL
+    };
 
     // default reporting interval
     self->reportInterval = 1;
@@ -29,9 +34,13 @@ static int SnrSquelch_init(SnrSquelch* self, PyObject* args, PyObject* kwds) {
     unsigned int fftSize = 256;
     unsigned int hangLength = 0;
     unsigned int flushLength = 1024 * 5;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!IIIII", kwlist, FORMAT_TYPE, &format, &length, &fftSize, &hangLength, &flushLength, &self->reportInterval)) {
+    unsigned int produceSilence = false;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!IIIIIp", kwlist, FORMAT_TYPE, &format, &length, &fftSize, &hangLength, &flushLength, &self->reportInterval, &produceSilence)) {
         return -1;
     }
+
+    // to produce silence, setting flushLength to special value of UINT_MAX
+    if (produceSilence) flushLength = UINT_MAX;
 
     self->inputFormat = format;
     self->outputFormat = format;

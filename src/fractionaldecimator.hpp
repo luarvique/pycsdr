@@ -6,7 +6,5 @@
 #include "module.hpp"
 
 struct FractionalDecimator: Module {};
-struct StereoFractionalDecimator: Module {};
 
 extern PyType_Spec FractionalDecimatorSpec;
-extern PyType_Spec StereoFractionalDecimatorSpec;

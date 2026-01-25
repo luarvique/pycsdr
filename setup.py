@@ -50,6 +50,7 @@ setup(
                 "src/convert.cpp",
                 "src/squelch.cpp",
                 "src/fractionaldecimator.cpp",
+                "src/fmstereo.cpp",
                 "src/fmdemod.cpp",
                 "src/limit.cpp",
                 "src/nfmdeemphasis.cpp",

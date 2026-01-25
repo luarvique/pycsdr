@@ -146,13 +146,13 @@ class FractionalDecimator(Module):
         ...
 
 
-class StereoFractionalDecimator(Module):
-    def __init__(self, format: Format, mpxrate: float, decimation: float, numPolyPoints: int = 12, prefilter: bool = False):
+class FmDemod(Module):
+    def __init__(self):
         ...
 
 
-class FmDemod(Module):
-    def __init__(self):
+class StereoFractionalDecimator(Module):
+    def __init__(self, format: Format, mpxrate: float, decimation: float, numPolyPoints: int = 12, prefilter: bool = False):
         ...
 
 

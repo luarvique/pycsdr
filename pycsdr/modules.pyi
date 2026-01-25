@@ -152,7 +152,7 @@ class FmDemod(Module):
 
 
 class StereoFractionalDecimator(Module):
-    def __init__(self, format: Format, mpxrate: float, decimation: float, numPolyPoints: int = 12, prefilter: bool = False):
+    def __init__(self, format: Format, rateMPX: float, decimation: float, tau: float = 50e-6, numPolyPoints: int = 12, prefilter: bool = False):
         ...
 
 

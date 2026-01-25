@@ -23,3 +23,24 @@ PyType_Spec FmDemodSpec = {
     Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_FINALIZE,
     FmDemodSlots
 };
+
+static int BCFmDemod_init(BCFmDemod* self, PyObject* args, PyObject* kwds) {
+    self->inputFormat = FORMAT_COMPLEX_FLOAT;
+    self->outputFormat = FORMAT_FLOAT;
+    self->setModule(new Csdr::BCFmDemod());
+
+    return 0;
+}
+
+static PyType_Slot BCFmDemodSlots[] = {
+    {Py_tp_init, (void*) BCFmDemod_init},
+    {0, 0}
+};
+
+PyType_Spec BCFmDemodSpec = {
+    "pycsdr.modules.BCFmDemod",
+    sizeof(BCFmDemod),
+    0,
+    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_FINALIZE,
+    BCFmDemodSlots
+};

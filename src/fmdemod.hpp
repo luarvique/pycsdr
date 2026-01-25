@@ -6,5 +6,7 @@
 #include "module.hpp"
 
 struct FmDemod: Module {};
+struct BCFmDemod: Module {};
 
 extern PyType_Spec FmDemodSpec;
+extern PyType_Spec BCFmDemodSpec;

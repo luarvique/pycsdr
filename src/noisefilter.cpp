@@ -10,14 +10,14 @@ static int NoiseFilter_init(NoiseFilter* self, PyObject* args, PyObject* kwds) {
         (char*)"decay", (char*)"attack", NULL
     };
 
-    self->threshold = 0;
+    self->threshold = 0.0f;
     self->fftSize = 1024;
     self->wndSize = 16;
-    self->attack  = 2;
-    self->decay   = 10;
+    self->attack  = 0.5f;
+    self->decay   = 0.1f;
     self->noiseFilter = NULL;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|iIIII", kwlist, &self->threshold, &self->fftSize, &self->wndSize, &self->decay, &self->attack)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|fIIff", kwlist, &self->threshold, &self->fftSize, &self->wndSize, &self->decay, &self->attack)) {
         return -1;
     }
 
@@ -35,7 +35,7 @@ static int NoiseFilter_init(NoiseFilter* self, PyObject* args, PyObject* kwds) {
 static PyObject* NoiseFilter_setThreshold(NoiseFilter* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = { (char*)"threshold", NULL };
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "i", kwlist, &self->threshold)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "f", kwlist, &self->threshold)) {
         return NULL;
     }
 
@@ -77,7 +77,7 @@ static PyObject* NoiseFilter_setFftSize(NoiseFilter* self, PyObject* args, PyObj
 static PyObject* NoiseFilter_setDecay(NoiseFilter* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = { (char*)"decay", NULL };
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", kwlist, &self->decay)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "f", kwlist, &self->decay)) {
         return NULL;
     }
 
@@ -91,7 +91,7 @@ static PyObject* NoiseFilter_setDecay(NoiseFilter* self, PyObject* args, PyObjec
 static PyObject* NoiseFilter_setAttack(NoiseFilter* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = { (char*)"attack", NULL };
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", kwlist, &self->attack)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "f", kwlist, &self->attack)) {
         return NULL;
     }
 

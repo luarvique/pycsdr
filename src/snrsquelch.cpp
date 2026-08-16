@@ -23,7 +23,7 @@ static int SnrSquelch_init(SnrSquelch* self, PyObject* args, PyObject* kwds) {
     static char* kwlist[] = {
         (char*) "format", (char*)"length", (char*)"fftSize",
         (char*)"hangLength", (char*)"flushLength",
-        (char*) "reportInterval", "produceSilence", NULL
+        (char*) "reportInterval", (char*)"produceSilence", NULL
     };
 
     // default reporting interval

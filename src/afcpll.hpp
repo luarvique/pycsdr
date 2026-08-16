@@ -7,4 +7,4 @@
 
 struct AfcPll: Module {};
 
-extern PyType_Spec AfcSpec;
+extern PyType_Spec AfcPllSpec;

@@ -106,8 +106,8 @@ static PyMethodDef NoiseFilter_methods[] = {
     { "setThreshold", (PyCFunction) NoiseFilter_setThreshold, METH_VARARGS | METH_KEYWORDS, "set filtering threshold in dB" },
     { "setWndSize", (PyCFunction) NoiseFilter_setWndSize, METH_VARARGS | METH_KEYWORDS, "set window size in buckets" },
     { "setFftSize", (PyCFunction) NoiseFilter_setFftSize, METH_VARARGS | METH_KEYWORDS, "set FFT size in buckets" },
-    { "setAttack", (PyCFunction) NoiseFilter_setAttack, METH_VARARGS | METH_KEYWORDS, "set filter attack rate in FFTs" },
-    { "setDecay", (PyCFunction) NoiseFilter_setDecay, METH_VARARGS | METH_KEYWORDS, "set filter decay rate in FFTs" },
+    { "setAttack", (PyCFunction) NoiseFilter_setAttack, METH_VARARGS | METH_KEYWORDS, "set filter attack rate" },
+    { "setDecay", (PyCFunction) NoiseFilter_setDecay, METH_VARARGS | METH_KEYWORDS, "set filter decay rate" },
     { NULL }  /* Sentinel */
 };
 

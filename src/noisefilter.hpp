@@ -8,7 +8,7 @@
 #include "module.hpp"
 
 struct NoiseFilter: Module {
-    Csdr::AFNoiseFilter *noiseFilter = NULL;
+    Csdr::NoiseFilter<float> *noiseFilter = NULL;
     float threshold = 0.0f;
     uint32_t wndSize = 16;
     uint32_t fftSize = 1024;

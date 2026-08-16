@@ -46,6 +46,7 @@
 #include "sstv.hpp"
 #include "fax.hpp"
 #include "afc.hpp"
+#include "afcpll.hpp"
 #include "sitorb.hpp"
 #include "ccir476.hpp"
 #include "dsc.hpp"
@@ -365,6 +366,12 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
+    PyObject* AfcPllType = PyType_FromSpecWithBases(&AfcPllSpec, bases);
+    if (AfcPllType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
     PyObject* SitorBDecoderType = PyType_FromSpecWithBases(&SitorBDecoderSpec, bases);
     if (SitorBDecoderType == NULL) return NULL;
 
@@ -498,6 +505,8 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "NoiseFilter", NoiseFilterType);
 
     PyModule_AddObject(m, "Afc", AfcType);
+
+    PyModule_AddObject(m, "AfcPll", AfcPllType);
 
     PyModule_AddObject(m, "SitorBDecoder", SitorBDecoderType);
 

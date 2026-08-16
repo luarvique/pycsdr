@@ -78,6 +78,7 @@ setup(
                 "src/sstv.cpp",
                 "src/fax.cpp",
                 "src/afc.cpp",
+                "src/afcpll.cpp",
                 "src/sitorb.cpp",
                 "src/ccir476.cpp",
                 "src/dsc.cpp",

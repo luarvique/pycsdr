@@ -5,6 +5,6 @@
 
 #include "module.hpp"
 
-struct AfcPll: Module {};
+struct FftAfc: Module {};
 
-extern PyType_Spec AfcPllSpec;
+extern PyType_Spec FftAfcSpec;

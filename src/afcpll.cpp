@@ -9,8 +9,8 @@ static int AfcPll_init(AfcPll* self, PyObject* args, PyObject* kwds) {
     };
 
     float sampleRate = 12000;
-    float bandwidth  = 100;
-    float dumpingFactor = 0.1f;
+    float bandwidth  = 100.0f;
+    float dumpingFactor = 0.3f;
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|fff", kwlist, &sampleRate, &bandwidth, &dumpingFactor)) {
         return -1;
     }

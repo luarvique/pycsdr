@@ -21,3 +21,24 @@ sudo ./setup.py install install_headers
 # TODO
 
 Add an example folder with some generic Python code using this library, e.g. WFM and AM radio demodulators.
+## Audio FSK/UART
+
+`FskUartDecoder` requires a matching CSDR build providing `csdr/fskuart.hpp`.
+It follows the native RTTY/SITOR-B binding pattern and runs its DSP in CSDR:
+
+```python
+from pycsdr.modules import FskUartDecoder
+
+worker = FskUartDecoder(sampleRate=12000, baudRate=1200,
+                        markFreq=1300, spaceFreq=2100)
+```
+
+Connect a `Format.FLOAT` audio reader and a `Format.CHAR` writer using the
+standard module methods. Each output line is
+`bits comma-separated-start-samples hex-octets`; candidate 8N1 and 8P1 runs
+need protocol-level validation. Per-octet sample positions distinguish parallel
+UART interpretations from later retransmissions. Finite audio needs trailing
+idle samples to finish the last run.
+
+After building against the matching library, run
+`python3 -m unittest discover -s tests -v` for constructor and native-buffer tests.

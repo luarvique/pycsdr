@@ -1,5 +1,6 @@
 #include "fskuart.hpp"
 #include "types.hpp"
+
 #include <csdr/fskuart.hpp>
 #include <cmath>
 #include <new>
@@ -10,6 +11,7 @@ static int FskUartDecoder_init(FskUartDecoder* self, PyObject* args, PyObject* k
         (char*) "sampleRate", (char*) "baudRate", (char*) "markFreq",
         (char*) "spaceFreq", (char*) "gapChars", (char*) "maxFrame", NULL
     };
+
     int sampleRate, maxFrame = 264;
     double baudRate = 1200, markFreq = 1300, spaceFreq = 2100, gapChars = 3.5;
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "i|ddddi", kwlist,
@@ -33,6 +35,7 @@ static int FskUartDecoder_init(FskUartDecoder* self, PyObject* args, PyObject* k
     }
     self->inputFormat = FORMAT_FLOAT;
     self->outputFormat = FORMAT_CHAR;
+
     return 0;
 }
 

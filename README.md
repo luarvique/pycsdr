@@ -18,10 +18,7 @@ Please also install the python development files (`libpython3-dev` on most Debia
 sudo ./setup.py install install_headers
 ```
 
-# TODO
-
-Add an example folder with some generic Python code using this library, e.g. WFM and AM radio demodulators.
-## Audio FSK/UART
+# Audio FSK/UART
 
 `FskUartDecoder` requires a matching CSDR build providing `csdr/fskuart.hpp`.
 It follows the native RTTY/SITOR-B binding pattern and runs its DSP in CSDR:
@@ -30,7 +27,7 @@ It follows the native RTTY/SITOR-B binding pattern and runs its DSP in CSDR:
 from pycsdr.modules import FskUartDecoder
 
 worker = FskUartDecoder(sampleRate=12000, baudRate=1200,
-                        markFreq=1300, spaceFreq=2100)
+                       markFreq=1300, spaceFreq=2100)
 ```
 
 Connect a `Format.FLOAT` audio reader and a `Format.CHAR` writer using the
@@ -42,3 +39,7 @@ idle samples to finish the last run.
 
 After building against the matching library, run
 `python3 -m unittest discover -s tests -v` for constructor and native-buffer tests.
+
+# TODO
+
+Add an example folder with some generic Python code using this library, e.g. WFM and AM radio demodulators.

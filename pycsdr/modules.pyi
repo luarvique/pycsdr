@@ -246,6 +246,7 @@ class PhaseDemod(Module):
     def __init__(self):
         ...
 
+
 class FskUartDecoder(Module):
     """Native audio FSK to timed 8N1/8P1 UART runs (FLOAT → CHAR).
 

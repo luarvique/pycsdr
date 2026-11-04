@@ -36,6 +36,7 @@
 #include "varicodedecoder.hpp"
 #include "phasedemod.hpp"
 #include "rtty.hpp"
+#include "fskuart.hpp"
 #include "baudot.hpp"
 #include "lowpass.hpp"
 #include "exec.hpp"
@@ -306,6 +307,12 @@ PyInit_modules(void) {
     Py_INCREF(ModuleType);
     bases = PyTuple_Pack(1, ModuleType);
     if (bases == NULL) return NULL;
+    PyObject* FskUartDecoderType = PyType_FromSpecWithBases(&FskUartDecoderSpec, bases);
+    if (FskUartDecoderType == NULL) return NULL;
+
+    Py_INCREF(ModuleType);
+    bases = PyTuple_Pack(1, ModuleType);
+    if (bases == NULL) return NULL;
     PyObject* BaudotDecoderType = PyType_FromSpecWithBases(&BaudotDecoderSpec, bases);
     if (BaudotDecoderType == NULL) return NULL;
 
@@ -485,6 +492,7 @@ PyInit_modules(void) {
     PyModule_AddObject(m, "PhaseDemod", PhaseDemodType);
 
     PyModule_AddObject(m, "RttyDecoder", RttyDecoderType);
+    PyModule_AddObject(m, "FskUartDecoder", FskUartDecoderType);
 
     PyModule_AddObject(m, "BaudotDecoder", BaudotDecoderType);
 

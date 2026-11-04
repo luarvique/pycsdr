@@ -246,6 +246,19 @@ class PhaseDemod(Module):
     def __init__(self):
         ...
 
+
+class FskUartDecoder(Module):
+    """Native audio FSK to timed 8N1/8P1 UART runs (FLOAT → CHAR).
+
+    Output lines: bits comma-separated-start-samples hex-octets.
+    Parity is not validated; a protocol checksum must validate candidate runs.
+    """
+    def __init__(self, sampleRate: int, baudRate: float = 1200,
+                 markFreq: float = 1300, spaceFreq: float = 2100,
+                 gapChars: float = 3.5, maxFrame: int = 264):
+        ...
+
+
 class RttyDecoder(Module):
     def __init__(self, invert: bool = False):
         ...

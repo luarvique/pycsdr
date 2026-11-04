@@ -68,6 +68,7 @@ setup(
                 "src/varicodedecoder.cpp",
                 "src/phasedemod.cpp",
                 "src/rtty.cpp",
+                "src/fskuart.cpp",
                 "src/baudot.cpp",
                 "src/lowpass.cpp",
                 "src/exec.cpp",

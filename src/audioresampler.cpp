@@ -14,7 +14,7 @@ static int AudioResampler_init(AudioResampler* self, PyObject* args, PyObject* k
     }
 
     if (format == FORMAT_COMPLEX_FLOAT) {
-        self->setModule(new Csdr::AudioResampler<complex<float>>(inputRate, outputRate));
+        self->setModule(new Csdr::AudioResampler<Csdr::complex<float>>(inputRate, outputRate));
     } else if (format == FORMAT_FLOAT) {
         self->setModule(new Csdr::AudioResampler<float>(inputRate, outputRate));
     } else {

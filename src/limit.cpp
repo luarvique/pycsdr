@@ -5,16 +5,27 @@
 #include <csdr/window.hpp>
 
 static int Limit_init(Limit* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "maxAmplitude", NULL};
+    static char* kwlist[] = {(char*) "format", (char*) "maxAmplitude", NULL};
 
     float maxAmplitude = 1.0f;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|f", kwlist, &maxAmplitude)) {
+    PyObject* format;
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!|f", kwlist, FORMAT_TYPE, &format, &maxAmplitude)) {
         return -1;
     }
 
-    self->inputFormat = FORMAT_FLOAT;
-    self->outputFormat = FORMAT_FLOAT;
-    self->setModule(new Csdr::Limit(maxAmplitude));
+    if (format == FORMAT_FLOAT) {
+        self->setModule(new Csdr::Limit<float>(maxAmplitude));
+    } else if (format == FORMAT_COMPLEX_FLOAT) {
+        self->setModule(new Csdr::Limit<Csdr::complex<float>>(maxAmplitude));
+    } else {
+        PyErr_SetString(PyExc_ValueError, "unsupported limit format");
+        return -1;
+    }
+
+    Py_INCREF(format);
+    self->inputFormat = format;
+    Py_INCREF(format);
+    self->outputFormat = format;
 
     return 0;
 }

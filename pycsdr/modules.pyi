@@ -162,7 +162,7 @@ class BCFmDemod(Module):
 
 
 class Limit(Module):
-    def __init__(self, maxAmplitude: float = 1.0):
+    def __init__(self,format: Format, maxAmplitude: float = 1.0):
         ...
 
 

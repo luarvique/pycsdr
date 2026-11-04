@@ -41,10 +41,11 @@ static int StereoFractionalDecimator_init(StereoFractionalDecimator* self, PyObj
         return -1;
     }
 
+    // MPX input stays mono float. Output is interleaved stereo:
+    // one COMPLEX_FLOAT sample per frame, real = left, imag = right.
     Py_INCREF(format);
     self->inputFormat = format;
-    Py_INCREF(format);
-    self->outputFormat = format;
+    self->outputFormat = FORMAT_COMPLEX_FLOAT;
 
     return 0;
 }

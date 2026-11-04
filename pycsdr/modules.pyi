@@ -209,7 +209,7 @@ class RealPart(Module):
 
 
 class AudioResampler(Module):
-    def __init__(self, inputRate: int, outputRate: int, channels: int = 1):
+    def __init__(self, format: Format, inputRate: int, outputRate: int):
         ...
 
 

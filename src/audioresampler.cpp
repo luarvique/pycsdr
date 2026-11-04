@@ -3,18 +3,29 @@
 #include <csdr/audioresampler.hpp>
 
 static int AudioResampler_init(AudioResampler* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "inputRate", (char*) "outputRate", (char*) "channels", NULL};
+    static char* kwlist[] = {(char*) "format", (char*) "inputRate", (char*) "outputRate", NULL};
 
     unsigned int inputRate = 0;
     unsigned int outputRate = 0;
-    unsigned int channels = 1;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "II|I", kwlist, &inputRate, &outputRate, &channels)) {
+    PyObject* format;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!II", kwlist, FORMAT_TYPE, &format, &inputRate, &outputRate)) {
         return -1;
     }
 
-    self->inputFormat = FORMAT_FLOAT;
-    self->outputFormat = FORMAT_FLOAT;
-    self->setModule(new Csdr::AudioResampler(inputRate, outputRate, channels));
+    if (format == FORMAT_COMPLEX_FLOAT) {
+        self->setModule(new Csdr::AudioResampler<complex<float>>(inputRate, outputRate));
+    } else if (format == FORMAT_FLOAT) {
+        self->setModule(new Csdr::AudioResampler<float>(inputRate, outputRate));
+    } else {
+        PyErr_SetString(PyExc_ValueError, "unsupported resampler format");
+        return -1;
+    }
+
+    Py_INCREF(format);
+    self->inputFormat = format;
+    Py_INCREF(format);
+    self->outputFormat = format;
 
     return 0;
 }

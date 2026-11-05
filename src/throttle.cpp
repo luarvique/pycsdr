@@ -18,6 +18,10 @@ static int Throttle_init(Throttle* self, PyObject* args, PyObject* kwds) {
         self->setModule(new Csdr::Throttle<short>(rate, chunkSize));
     } else if (format == FORMAT_FLOAT) {
         self->setModule(new Csdr::Throttle<float>(rate, chunkSize));
+    } else if (format == FORMAT_COMPLEX_SHORT) {
+        self->setModule(new Csdr::Throttle<Csdr::complex<short>>(rate, chunkSize));
+    } else if (format == FORMAT_COMPLEX_FLOAT) {
+        self->setModule(new Csdr::Throttle<Csdr::complex<float>>(rate, chunkSize));
     } else {
         PyErr_SetString(PyExc_ValueError, "unsupported throttle format");
         return -1;

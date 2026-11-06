@@ -214,7 +214,7 @@ class AudioResampler(Module):
 
 
 class AdpcmEncoder(Module):
-    def __init__(self, sync: bool = False):
+    def __init__(self, format: Format, sync: bool = False):
         ...
 
 

@@ -3,16 +3,26 @@
 #include <csdr/adpcm.hpp>
 
 static int AdpcmEncoder_init(AdpcmEncoder* self, PyObject* args, PyObject* kwds) {
-    static char* kwlist[] = {(char*) "sync", NULL};
+    static char* kwlist[] = {(char*) "format", (char*) "sync", NULL};
 
+    PyObject* format;
     int sync = false;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|b", kwlist, &sync)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!|b", kwlist, FORMAT_TYPE, &format, &sync)) {
         return -1;
     }
 
-    self->inputFormat = FORMAT_SHORT;
+    if (format == FORMAT_SHORT) {
+        self->setModule(new Csdr::AdpcmEncoder(sync));
+    } else if (format == FORMAT_COMPLEX_SHORT) {
+        self->setModule(new Csdr::StereoAdpcmEncoder(sync));
+    } else {
+        PyErr_SetString(PyExc_ValueError, "unsupported adpcm format");
+        return -1;
+    }
+
+    Py_INCREF(format);
+    self->inputFormat = format;
     self->outputFormat = FORMAT_CHAR;
-    self->setModule(new Csdr::AdpcmEncoder(sync));
 
     return 0;
 }

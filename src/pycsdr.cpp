@@ -57,15 +57,15 @@
 #include <csdr/version.hpp>
 
 static PyModuleDef pycsdrmodule = {
-        PyModuleDef_HEAD_INIT,
-        "pycsdr.modules",
-        "Python bindings for the csdr library",
-        -1,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
+    PyModuleDef_HEAD_INIT,
+    .m_name = "pycsdr.modules",
+    .m_doc = "Python bindings for the csdr library",
+    .m_size = -1,
+    .m_methods = NULL,
+    .m_slots = NULL,
+    .m_traverse = NULL,
+    .m_clear = NULL,
+    .m_free = NULL
 };
 
 PyTypeObject* WriterType;

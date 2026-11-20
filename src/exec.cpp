@@ -66,6 +66,8 @@ static int ExecModule_init(ExecModule* self, PyObject* args, PyObject* kwds) {
             self->setModule(new Csdr::ExecModule<unsigned char, unsigned char>(args_vector, flushSize, (bool) doNotKill));
         } else if (outFormat == FORMAT_FLOAT) {
             self->setModule(new Csdr::ExecModule<unsigned char, float>(args_vector, flushSize, (bool) doNotKill));
+        } else if (outFormat == FORMAT_COMPLEX_SHORT) {
+            self->setModule(new Csdr::ExecModule<unsigned char, Csdr::complex<short>>(args_vector, flushSize, (bool) doNotKill));
         } else if (outFormat == FORMAT_COMPLEX_FLOAT) {
             self->setModule(new Csdr::ExecModule<unsigned char, Csdr::complex<float>>(args_vector, flushSize, (bool) doNotKill));
         } else {
